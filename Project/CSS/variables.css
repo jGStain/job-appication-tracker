@@ -1,0 +1,22 @@
+:root {
+    /* Backgrounds */
+    --clr-bg: #0b1017;
+    --clr-surface: #121923;
+    --clr-surface-light: #1a222e;
+    --clr-border: #2a3441;
+
+    /* Text */
+    --clr-text: #f8fafc;
+    --clr-text-muted: #94a3b8;
+
+    /* Primary Accent */
+    --clr-accent: #7c5ce7;
+    --clr-accent-hover: #6d4ed8;
+
+    /* Application Status */
+    --clr-interested: #a78bfa;
+    --clr-applied: #60a5fa;
+    --clr-interview: #f59e0b;
+    --clr-offer: #4ade80;
+    --clr-rejected: #f87171;
+}
