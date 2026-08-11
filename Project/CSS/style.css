@@ -1,0 +1,37 @@
+body {
+    background-color: var(--clr-bg);
+    color: var(--clr-text);
+    font-family: Arial, sans-serif;
+}
+
+.app_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+}
+
+.app_header_menu,
+.app_header_add {
+    border: none;
+    background: none;
+    color: var(--clr-text);
+    cursor: pointer;
+}
+
+.app_header_title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.app_header_add {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background-color: var(--clr-accent);
+    font-size: 1.75rem;
+}
+
+.app_header_menu {
+    font-size: 1.5rem;
+}
