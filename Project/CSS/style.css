@@ -4,6 +4,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+main {
+    padding: 0 1.5rem;
+}
+
 .app_header {
     display: flex;
     align-items: center;
@@ -34,4 +38,63 @@ body {
 
 .app_header_menu {
     font-size: 1.5rem;
+}
+
+.search_controls_container {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.application_search {
+    flex-grow: 1;
+    min-width: 0;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    background-color: var(--clr-surface);
+    color: var(--clr-text);
+    font-size: 1rem;
+}
+
+.application_search::placeholder {
+    color: var(--clr-text-muted);
+}
+
+.application_search_btn {
+    width: 3rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    background-color: var(--clr-surface);
+    color: var(--clr-text);
+    cursor: pointer;
+}
+
+.status_container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    overflow-x: auto;
+    margin-top: 1rem;
+    scrollbar-width: none;
+}
+
+.status_container::-webkit-scrollbar {
+    display: none;
+}
+
+.status_filter {
+    flex-shrink: 0;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 2rem;
+    background-color: var(--clr-surface);
+    color: var(--clr-text-muted);
+    cursor: pointer;
+}
+
+.status_filter.active {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent);
+    color: var(--clr-text);
 }
