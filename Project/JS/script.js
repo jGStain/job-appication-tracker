@@ -26,9 +26,78 @@ const applications = [{
 applications.forEach((application) => {
     const applicationCard = document.createElement("div");
     applicationCard.classList.add("applications_section_card");
+    applicationsSection.appendChild(applicationCard);
+
     const companyLogo = document.createElement("div");
     companyLogo.classList.add("applications_company_logo");
-    companyLogo.textContent = application.company;
     applicationCard.appendChild(companyLogo);
-    applicationsSection.appendChild(applicationCard);
+
+    const applicationInfo = document.createElement("div");
+    applicationInfo.classList.add("applications_card_info");
+    applicationCard.appendChild(applicationInfo);
+
+    const applicationHeading = document.createElement("div");
+    applicationHeading.classList.add("applications_card_heading");
+    applicationInfo.appendChild(applicationHeading);
+
+    const applicationTitle = document.createElement("h3");
+    applicationTitle.classList.add("applications_card_title");
+    applicationTitle.textContent = application.role;
+    applicationHeading.appendChild(applicationTitle);
+
+    const applicationStatus = document.createElement("p");
+    applicationStatus.classList.add("applications_card_status");
+    applicationStatus.textContent = application.status;
+    applicationHeading.appendChild(applicationStatus);
+
+    const applicationName = document.createElement("p");
+    applicationName.classList.add("applications_card_name");
+    applicationName.textContent = application.company;
+    applicationInfo.appendChild(applicationName);
+
+    const applicationMeta = document.createElement("div");
+    applicationMeta.classList.add("applications_card_meta");
+    applicationInfo.appendChild(applicationMeta);
+
+    // Company Initials
+    const companyWords = application.company.split(" ");
+    const initials = companyWords.map(word => word.charAt(0)).join("");
+    companyLogo.textContent = initials;
+
+    //Application Date
+    const applicationDateObject = new Date(application.date);
+
+    const applicationDateOptions = {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    };
+
+    const formattedApplicationDate = applicationDateObject.toLocaleDateString("en-GB", applicationDateOptions);
+
+    const applicationDate = document.createElement("p");
+    applicationDate.classList.add("applications_card_date");
+    applicationDate.textContent = formattedApplicationDate;
+    applicationMeta.appendChild(applicationDate);
+
+    const applicationSeparator = document.createElement("span");
+    applicationSeparator.setAttribute("aria-hidden", "true");
+    applicationSeparator.textContent = "•";
+    applicationMeta.appendChild(applicationSeparator);
+
+    const applicationNotes = document.createElement("p");
+    applicationNotes.classList.add("applications_card_notes");
+    applicationNotes.textContent = application.notes;
+    applicationMeta.appendChild(applicationNotes);
+
+    const applicationMenu = document.createElement("button");
+    applicationMenu.classList.add("applications_card_menu");
+    applicationMenu.setAttribute("aria-label", "Application options");
+    applicationCard.appendChild(applicationMenu);
+
+    const applicationMenuIcon = document.createElement("i");
+    applicationMenuIcon.classList.add("fa-solid", "fa-ellipsis-vertical");
+    applicationMenuIcon.setAttribute("aria-hidden", "true");
+    applicationMenu.appendChild(applicationMenuIcon);
+
 });
