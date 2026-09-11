@@ -23,7 +23,21 @@ const applications = [{
     notes: "Not Invited For Interview"
 }];
 
-applications.forEach((application) => {
+const createApplicationCard = application => {
+    //Company Initials
+    const companyWords = application.company.split(" ");
+    const initials = companyWords.map(word => word.charAt(0)).join("");
+
+    //Application Date
+    const applicationDateObject = new Date(application.date);
+
+    const applicationDateOptions = {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    };
+
+    const formattedApplicationDate = applicationDateObject.toLocaleDateString("en-GB", applicationDateOptions);
     const applicationCard = document.createElement("div");
     applicationCard.classList.add("applications_section_card");
     applicationsSection.appendChild(applicationCard);
@@ -31,6 +45,7 @@ applications.forEach((application) => {
     const companyLogo = document.createElement("div");
     companyLogo.classList.add("applications_company_logo");
     applicationCard.appendChild(companyLogo);
+    companyLogo.textContent = initials;
 
     const applicationInfo = document.createElement("div");
     applicationInfo.classList.add("applications_card_info");
@@ -59,22 +74,6 @@ applications.forEach((application) => {
     applicationMeta.classList.add("applications_card_meta");
     applicationInfo.appendChild(applicationMeta);
 
-    // Company Initials
-    const companyWords = application.company.split(" ");
-    const initials = companyWords.map(word => word.charAt(0)).join("");
-    companyLogo.textContent = initials;
-
-    //Application Date
-    const applicationDateObject = new Date(application.date);
-
-    const applicationDateOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric"
-    };
-
-    const formattedApplicationDate = applicationDateObject.toLocaleDateString("en-GB", applicationDateOptions);
-
     const applicationDate = document.createElement("p");
     applicationDate.classList.add("applications_card_date");
     applicationDate.textContent = formattedApplicationDate;
@@ -99,5 +98,8 @@ applications.forEach((application) => {
     applicationMenuIcon.classList.add("fa-solid", "fa-ellipsis-vertical");
     applicationMenuIcon.setAttribute("aria-hidden", "true");
     applicationMenu.appendChild(applicationMenuIcon);
+};
 
+applications.forEach((application) => {
+    createApplicationCard(application);
 });
