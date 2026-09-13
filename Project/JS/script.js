@@ -27,6 +27,7 @@ const applications = [{
 const totalApplications = document.querySelector("#totalApplications");
 totalApplications.textContent = applications.length;
 
+// Totals and Percentages
 const updateStat = (status, countSelector, percentageSelector) => {
     const filteredApplications = applications.filter((application) => application.status === status);
 
@@ -47,6 +48,23 @@ updateStat("Interview", "#interviewApplications", "#interview_percentage");
 updateStat("Offer", "#offersApplications", "#offer_percentage");
 updateStat("Rejected", "#rejectedApplications", "#reject_percentage");
 
+//Application Buttons
+const allApplicationsCount = document.querySelector("#allCount");
+allApplicationsCount.textContent = applications.length;
+
+const updateFilterCount = (status, countSelector) => {
+    const filteredApplications = applications.filter((application) => application.status === status);
+    const countElement = document.querySelector(countSelector);
+    countElement.textContent = filteredApplications.length;
+};
+
+updateFilterCount("Interested", "#interestedCount");
+updateFilterCount("Applied", "#appliedCount");
+updateFilterCount("Interview", "#interviewCount");
+updateFilterCount("Offer", "#offerCount");
+updateFilterCount("Rejected", "#rejectedCount");
+
+//Create Application Cards
 const createApplicationCard = application => {
     //Company Initials
     const companyWords = application.company.split(" ");
