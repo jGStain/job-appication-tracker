@@ -27,61 +27,25 @@ const applications = [{
 const totalApplications = document.querySelector("#totalApplications");
 totalApplications.textContent = applications.length;
 
-//Total Applied and Percentage
-const appliedApplications = applications.filter((application) => application.status === "Applied");
-const totalAppliedEl = document.querySelector("#appliedApplications");
-totalAppliedEl.textContent = appliedApplications.length;
+const updateStat = (status, countSelector, percentageSelector) => {
+    const filteredApplications = applications.filter((application) => application.status === status);
 
-let appliedPercentage;
-const totalAppliedPercentage = document.querySelector("#applied_percentage");
-if (applications.length === 0) {
-    totalAppliedPercentage.textContent = "0%";
-} else {
-    appliedPercentage = Math.round(appliedApplications.length / applications.length * 100);
-    totalAppliedPercentage.textContent = `${appliedPercentage}%`;
-}
+    const countElement = document.querySelector(countSelector);
+    countElement.textContent = filteredApplications.length;
 
-//Total Interview and Percentage
-const interviewApplications = applications.filter((application) => application.status === "Interview");
-const totalInterviewEl = document.querySelector("#interviewApplications");
-totalInterviewEl.textContent = interviewApplications.length;
+    const percentageElement = document.querySelector(percentageSelector);
+    if (applications.length === 0) {
+        percentageElement.textContent = "0%";
+    } else {
+        const percentage = Math.round(filteredApplications.length / applications.length * 100);
+        percentageElement.textContent = `${percentage}%`;
+    }
+};
 
-let interviewPercentage;
-const totalInterviewPercentage = document.querySelector("#interview_percentage");
-if (applications.length === 0) {
-    totalInterviewPercentage.textContent = "0%";
-} else {
-    interviewPercentage = Math.round(interviewApplications.length / applications.length * 100);
-    totalInterviewPercentage.textContent = `${interviewPercentage}%`;
-}
-
-//Total Offers and Percentage
-const applicationOffers = applications.filter((application) => application.status === "Offer");
-const totalOffersEl = document.querySelector("#offersApplications");
-totalOffersEl.textContent = applicationOffers.length;
-
-let offerPercentage;
-const totalOffersPercentage = document.querySelector("#offer_percentage");
-if (applications.length === 0) {
-    totalOffersPercentage.textContent = "0%";
-} else {
-    offerPercentage = Math.round(applicationOffers.length / applications.length * 100);
-    totalOffersPercentage.textContent = `${offerPercentage}%`;
-}
-
-//Total Rejections and Percentage
-const rejectedApplications = applications.filter((application) => application.status === "Rejected");
-const totalRejectedEl = document.querySelector("#rejectedApplications");
-totalRejectedEl.textContent = rejectedApplications.length;
-
-let rejectionsPercentage;
-const totalRejectionPercentage = document.querySelector("#reject_percentage");
-if (applications.length === 0) {
-    totalRejectionPercentage.textContent = "0%";
-} else {
-    rejectionsPercentage = Math.round(rejectedApplications.length / applications.length * 100);
-    totalRejectionPercentage.textContent = `${rejectionsPercentage}%`;
-}
+updateStat("Applied", "#appliedApplications", "#applied_percentage");
+updateStat("Interview", "#interviewApplications", "#interview_percentage");
+updateStat("Offer", "#offersApplications", "#offer_percentage");
+updateStat("Rejected", "#rejectedApplications", "#reject_percentage");
 
 const createApplicationCard = application => {
     //Company Initials
