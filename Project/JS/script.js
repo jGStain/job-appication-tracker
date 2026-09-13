@@ -23,8 +23,65 @@ const applications = [{
     notes: "Not Invited For Interview"
 }];
 
+//Get Applications Total
 const totalApplications = document.querySelector("#totalApplications");
 totalApplications.textContent = applications.length;
+
+//Total Applied and Percentage
+const appliedApplications = applications.filter((application) => application.status === "Applied");
+const totalAppliedEl = document.querySelector("#appliedApplications");
+totalAppliedEl.textContent = appliedApplications.length;
+
+let appliedPercentage;
+const totalAppliedPercentage = document.querySelector("#applied_percentage");
+if (applications.length === 0) {
+    totalAppliedPercentage.textContent = "0%";
+} else {
+    appliedPercentage = Math.round(appliedApplications.length / applications.length * 100);
+    totalAppliedPercentage.textContent = `${appliedPercentage}%`;
+}
+
+//Total Interview and Percentage
+const interviewApplications = applications.filter((application) => application.status === "Interview");
+const totalInterviewEl = document.querySelector("#interviewApplications");
+totalInterviewEl.textContent = interviewApplications.length;
+
+let interviewPercentage;
+const totalInterviewPercentage = document.querySelector("#interview_percentage");
+if (applications.length === 0) {
+    totalInterviewPercentage.textContent = "0%";
+} else {
+    interviewPercentage = Math.round(interviewApplications.length / applications.length * 100);
+    totalInterviewPercentage.textContent = `${interviewPercentage}%`;
+}
+
+//Total Offers and Percentage
+const applicationOffers = applications.filter((application) => application.status === "Offer");
+const totalOffersEl = document.querySelector("#offersApplications");
+totalOffersEl.textContent = applicationOffers.length;
+
+let offerPercentage;
+const totalOffersPercentage = document.querySelector("#offer_percentage");
+if (applications.length === 0) {
+    totalOffersPercentage.textContent = "0%";
+} else {
+    offerPercentage = Math.round(applicationOffers.length / applications.length * 100);
+    totalOffersPercentage.textContent = `${offerPercentage}%`;
+}
+
+//Total Rejections and Percentage
+const rejectedApplications = applications.filter((application) => application.status === "Rejected");
+const totalRejectedEl = document.querySelector("#rejectedApplications");
+totalRejectedEl.textContent = rejectedApplications.length;
+
+let rejectionsPercentage;
+const totalRejectionPercentage = document.querySelector("#reject_percentage");
+if (applications.length === 0) {
+    totalRejectionPercentage.textContent = "0%";
+} else {
+    rejectionsPercentage = Math.round(rejectedApplications.length / applications.length * 100);
+    totalRejectionPercentage.textContent = `${rejectionsPercentage}%`;
+}
 
 const createApplicationCard = application => {
     //Company Initials
@@ -101,7 +158,7 @@ const createApplicationCard = application => {
     const applicationDate = document.createElement("p");
     applicationDate.classList.add("applications_card_date");
     applicationDate.textContent = formattedApplicationDate;
-    applicationMeta.appendChild(applicationDate);
+    applicationMeta.appendChild(applicationDate)
 
     const applicationSeparator = document.createElement("span");
     applicationSeparator.setAttribute("aria-hidden", "true");
@@ -127,3 +184,4 @@ const createApplicationCard = application => {
 applications.forEach((application) => {
     createApplicationCard(application);
 });
+
