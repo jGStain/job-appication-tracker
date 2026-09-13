@@ -353,3 +353,53 @@ main {
     color: var(--clr-text-muted);
     cursor: pointer;
 }
+
+.status_interview {
+    color: var(--clr-interview);
+    border-color: var(--clr-interview);
+    background: color-mix(
+        in srgb,
+        var(--clr-interview) 10%,
+        transparent
+    );
+}
+
+.status_applied {
+    color: var(--clr-applied);
+    border-color: var(--clr-applied);
+    background: color-mix(
+        in srgb,
+        var(--clr-applied) 10%,
+        transparent
+    );
+}
+
+.status_rejected {
+    color: var(--clr-rejected);
+    border-color: var(--clr-rejected);
+    background: color-mix(
+        in srgb,
+        var(--clr-rejected) 10%,
+        transparent
+    );
+}
+
+.status_offer {
+    color: var(--clr-offer);
+    border-color: var(--clr-offer);
+    background: color-mix(
+        in srgb,
+        var(--clr-offer) 10%,
+        transparent
+    );
+}
+
+.status_interested {
+    color: var(--clr-interested);
+    border-color: var(--clr-interested);
+    background: color-mix(
+        in srgb,
+        var(--clr-interested) 10%,
+        transparent
+    );
+}

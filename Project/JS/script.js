@@ -23,6 +23,9 @@ const applications = [{
     notes: "Not Invited For Interview"
 }];
 
+const totalApplications = document.querySelector("#totalApplications");
+totalApplications.textContent = applications.length;
+
 const createApplicationCard = application => {
     //Company Initials
     const companyWords = application.company.split(" ");
@@ -38,6 +41,7 @@ const createApplicationCard = application => {
     };
 
     const formattedApplicationDate = applicationDateObject.toLocaleDateString("en-GB", applicationDateOptions);
+
     const applicationCard = document.createElement("div");
     applicationCard.classList.add("applications_section_card");
     applicationsSection.appendChild(applicationCard);
@@ -64,6 +68,26 @@ const createApplicationCard = application => {
     applicationStatus.classList.add("applications_card_status");
     applicationStatus.textContent = application.status;
     applicationHeading.appendChild(applicationStatus);
+
+    switch(application.status) {
+        case "Interview":
+            applicationStatus.classList.add("status_interview");
+            break;
+        case "Applied":
+            applicationStatus.classList.add("status_applied");
+            break;
+        case "Rejected":
+            applicationStatus.classList.add("status_rejected");
+            break;
+        case "Offer":
+            applicationStatus.classList.add("status_offer");
+            break;
+        case "Interested":
+            applicationStatus.classList.add("status_interested");
+            break;
+        default:
+            break;
+    };
 
     const applicationName = document.createElement("p");
     applicationName.classList.add("applications_card_name");
