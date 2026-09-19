@@ -64,6 +64,43 @@ updateFilterCount("Interview", "#interviewCount");
 updateFilterCount("Offer", "#offerCount");
 updateFilterCount("Rejected", "#rejectedCount");
 
+const filterButtons = document.querySelectorAll(".status_filter");
+filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        filterButtons.forEach((filterButton) => {
+            filterButton.classList.remove("active");
+        });
+        button.classList.add("active");
+        const applicationCards = document.querySelectorAll(".applications_section_card");
+        const selectedStatus = button.dataset.status;
+        applicationCards.forEach((card) => {
+            card.remove();
+        });
+        const noApplicationMessage = document.querySelector(".no_application_message");
+        if (noApplicationMessage) {
+            noApplicationMessage.remove();
+        }
+        if (selectedStatus === "All") {
+            applications.forEach((application) => {
+            createApplicationCard(application);
+        });
+        } else {
+            const filteredApplications = applications.filter(
+            (application) => application.status === selectedStatus
+        );
+        filteredApplications.forEach((application) => {
+            createApplicationCard(application);
+        });
+        if (filteredApplications.length === 0) {
+            const noApplicationText = document.createElement("p");
+            noApplicationText.classList.add("no_application_message");
+            noApplicationText.textContent = "No Applications Found";
+            applicationsSection.appendChild(noApplicationText);
+            }   
+        }
+    });
+});
+
 //Create Application Cards
 const createApplicationCard = application => {
     //Company Initials
