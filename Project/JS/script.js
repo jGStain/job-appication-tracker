@@ -418,10 +418,26 @@ filterButtons.forEach((button) => {
 
 applicationSearch.addEventListener("input", () => {
     const searchTerm = applicationSearch.value.toLowerCase();
-    const searchApplications = applications.filter((application) => application.company.toLowerCase().includes(searchTerm));
+    const searchApplications = applications.filter((application) => 
+        application.company.toLowerCase().includes(searchTerm) || application.role.toLowerCase().includes(searchTerm));
 
     const applicationCards = document.querySelectorAll(".applications_section_card");
     applicationCards.forEach((card) => {
         card.remove();
     });
+    const noApplicationMessage =document.querySelector(".no_application_message");
+    if (noApplicationMessage) {
+        noApplicationMessage.remove();
+    };
+    searchApplications.forEach((application) => {
+        createApplicationCard(application);
+    });
+    if (searchApplications.length === 0) {
+        const noApplicationText = document.createElement("p");
+        noApplicationText.classList.add("no_application_message");
+        noApplicationText.textContent = "No Application Found";
+        applicationsSection.appendChild(noApplicationText);
+    };
 });
+
+
