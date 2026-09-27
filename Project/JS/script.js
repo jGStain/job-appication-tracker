@@ -24,6 +24,9 @@ const applications = [{
     notes: "Not Invited For Interview"
 }];
 
+let currentStatus = "All";
+let currentSearchTerm = "";
+
 // ========================================
 // DOM ELEMENTS
 // ========================================
@@ -274,6 +277,41 @@ const updateFilterCount = (status, countSelector) => {
     countElement.textContent = filteredApplications.length;
 };
 
+//Remove applcation results
+
+const clearApplicationResults = () => {
+    const applicationCards = document.querySelectorAll(".applications_section_card");
+    applicationCards.forEach((card) => {
+        card.remove();
+    });
+    const noApplicationMessage = document.querySelector(".no_application_message");
+    if (noApplicationMessage) {
+        noApplicationMessage.remove();
+    }
+};
+
+const renderApplications = () => {
+    console.log("Search term:", currentSearchTerm);
+    const filteredApplications = applications.filter((application) => {
+        const matchesStatus = currentStatus === "All" || application.status === currentStatus;
+        const matchesSearch = application.company.toLowerCase().includes(currentSearchTerm) || application.role.toLowerCase().includes(currentSearchTerm);
+        return matchesStatus && matchesSearch;
+    });
+
+    clearApplicationResults();
+
+    filteredApplications.forEach((application) => {
+        createApplicationCard(application);
+    });
+
+    if (filteredApplications.length === 0) {
+        const noApplicationText = document.createElement("p");
+        noApplicationText.classList.add("no_application_message");
+        noApplicationText.textContent = "No Application Found";
+        applicationsSection.appendChild(noApplicationText);
+    };
+};
+
 
 // ========================================
 // INITIAL PAGE SETUP
@@ -362,82 +400,16 @@ filterButtons.forEach((button) => {
         });
         // Add active class to clicked button
         button.classList.add("active");
-        // Get cards currently displayed
-        const applicationCards =
-            document.querySelectorAll(
-                ".applications_section_card"
-            );
         // Get selected status
-        const selectedStatus = button.dataset.status;
-        // Remove currently displayed cards
-        applicationCards.forEach((card) => {
-            card.remove();
-        });
-        // Remove old "No Applications Found" message
-        const noApplicationMessage =
-            document.querySelector(
-                ".no_application_message"
-            );
-        if (noApplicationMessage) {
-            noApplicationMessage.remove();
-        }
-        // Display Applications
-        if (selectedStatus === "All") {
-            applications.forEach((application) => {
-                createApplicationCard(application);
-            });
-        } else {
-            const filteredApplications =
-                applications.filter(
-                    (application) =>
-                        application.status === selectedStatus
-                );
-            filteredApplications.forEach((application) => {
-                createApplicationCard(application);
-            });
+        currentStatus = button.dataset.status;
 
-            // No Applications Found
-
-            if (filteredApplications.length === 0) {
-                const noApplicationText =
-                    document.createElement("p");
-                noApplicationText.classList.add(
-                    "no_application_message"
-                );
-                noApplicationText.textContent =
-                    "No Applications Found";
-                applicationsSection.appendChild(
-                    noApplicationText
-                );
-            }
-        }
+        renderApplications();
     });
 });
 
 // Search Functionality
 
 applicationSearch.addEventListener("input", () => {
-    const searchTerm = applicationSearch.value.toLowerCase();
-    const searchApplications = applications.filter((application) => 
-        application.company.toLowerCase().includes(searchTerm) || application.role.toLowerCase().includes(searchTerm));
-
-    const applicationCards = document.querySelectorAll(".applications_section_card");
-    applicationCards.forEach((card) => {
-        card.remove();
-    });
-    const noApplicationMessage =document.querySelector(".no_application_message");
-    if (noApplicationMessage) {
-        noApplicationMessage.remove();
-    };
-    searchApplications.forEach((application) => {
-        createApplicationCard(application);
-    });
-    if (searchApplications.length === 0) {
-        const noApplicationText = document.createElement("p");
-        noApplicationText.classList.add("no_application_message");
-        noApplicationText.textContent = "No Application Found";
-        applicationsSection.appendChild(noApplicationText);
-    };
+    currentSearchTerm = applicationSearch.value.toLowerCase();
+    renderApplications();
 });
-
-
