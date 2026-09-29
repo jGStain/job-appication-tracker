@@ -40,6 +40,8 @@ const filterButtons = document.querySelectorAll(".status_filter");
 
 const applicationSearch = document.querySelector(".application_search");
 
+const applicationForm = document.querySelector("#add_application_form");
+
 
 // ========================================
 // FUNCTIONS
@@ -389,6 +391,33 @@ applications.forEach((application) => {
 // ========================================
 // EVENT LISTENERS
 // ========================================
+
+//Add Application
+
+applicationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const company = document.querySelector("#company").value;
+    const role = document.querySelector("#role").value;
+    const date = document.querySelector("#date").value;
+    const notes = document.querySelector("#notes").value;
+    const id = applications.length + 1;
+
+    const newApplication = {
+        id,
+        company,
+        role,
+        status: "Applied",
+        date,
+        notes
+    };
+
+    applications.push(newApplication);
+
+    renderApplications();
+
+    applicationForm.reset();
+});
 
 // Status Filter Functionality
 

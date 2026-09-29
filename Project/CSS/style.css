@@ -403,3 +403,7 @@ main {
         transparent
     );
 }
+
+.hidden {
+    display: none;
+}
