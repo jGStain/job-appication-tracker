@@ -42,6 +42,12 @@ const applicationSearch = document.querySelector(".application_search");
 
 const applicationForm = document.querySelector("#add_application_form");
 
+const addApplicationButton = document.querySelector(".app_header_add");
+
+const applicationModal = document.querySelector(".application_modal");
+
+const closeApplicationButton = document.querySelector(".application_form_close");
+
 
 // ========================================
 // FUNCTIONS
@@ -417,6 +423,8 @@ applicationForm.addEventListener("submit", (e) => {
     renderApplications();
 
     applicationForm.reset();
+
+    applicationModal.classList.add("hidden");
 });
 
 // Status Filter Functionality
@@ -441,4 +449,17 @@ filterButtons.forEach((button) => {
 applicationSearch.addEventListener("input", () => {
     currentSearchTerm = applicationSearch.value.toLowerCase();
     renderApplications();
+});
+
+// Add Application
+
+addApplicationButton.addEventListener("click", () => {
+    applicationModal.classList.remove("hidden");
+});
+
+// Close Application Form
+
+closeApplicationButton.addEventListener("click", () => {
+    applicationModal.classList.add("hidden");
+    applicationForm.reset();
 });

@@ -108,18 +108,37 @@
             
         </section>
 
-        <form id="add_application_form">
-            <label for="company">Company</label>
-            <input type="text" id="company" name="company" required>
-            <label for="role">Role</label>
-            <input type="text" id="role" name="role" required>
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date">
-            <label for="notes">Notes</label>
-            <textarea id="notes" name="notes"></textarea>
+        <div class="application_modal hidden">
+            <form id="add_application_form">
+                <div class="application_form_header">
+                    <h2>Add Application</h2>
+                    <button 
+                        class="application_form_close" 
+                        type="button" 
+                        aria-label="Close Application Form">
+                        ×
+                    </button>
+                </div>
+                <div class="application_form_group">
+                    <label for="company">Company</label>
+                    <input class="application_form_control" type="text" id="company" name="company" required>
+                </div>
+                <div class="application_form_group">
+                    <label for="role">Role</label>
+                    <input class="application_form_control" type="text" id="role" name="role" required>
+                </div>
+                <div class="application_form_group">
+                    <label for="date">Date</label>
+                    <input class="application_form_control" type="date" id="date" name="date">
+                </div>
+                <div class="application_form_group">
+                    <label for="notes">Notes</label>
+                    <textarea class="application_form_control" id="notes" name="notes"></textarea>
+                </div>
 
-            <button type="submit">Add Application</button>
-        </form>
+                <button class="application_form_submit" type="submit">Add Application</button>
+            </form>
+        </div>
 
     </main>
     
