@@ -271,6 +271,41 @@ main {
     border: 1px solid var(--clr-border);
     border-radius: 0.75rem;
     background-color: var(--clr-surface);
+    position: relative;
+}
+
+.applications_card_options {
+    position: absolute;
+    right: 1rem;
+    bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 7rem;
+    background-color: var(--clr-surface-light);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.applications_card_options.hidden {
+    display: none;
+}
+
+.applications_card_edit,
+.applications_card_delete {
+    background: none;
+    border: none;
+    color: var(--clr-text);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.applications_card_delete {
+    color: var(--clr-rejected);
+    border-top: 1px solid var(--clr-border);
 }
 
 .applications_company_logo {
@@ -468,4 +503,3 @@ main {
     font-size: 1rem;
     cursor: pointer;
 }
-

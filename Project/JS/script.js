@@ -1,7 +1,7 @@
 // ========================================
 // DATA
 // ========================================
-const applications = [{
+let applications = [{
     id: 1,
     company: "Acme Digital",
     role: "Front-End Developer",
@@ -26,6 +26,13 @@ const applications = [{
 
 let currentStatus = "All";
 let currentSearchTerm = "";
+
+const savedApplications = localStorage.getItem("applications");
+
+if (savedApplications) {
+    const parsedApplications = JSON.parse(savedApplications);
+    applications = parsedApplications;
+}
 
 // ========================================
 // DOM ELEMENTS
@@ -226,7 +233,45 @@ const createApplicationCard = application => {
         "Application options"
     );
 
+    applicationMenu.dataset.id = application.id;
+
+    applicationMenu.addEventListener("click", () => {
+        applicationOptions.classList.toggle("hidden");
+    });
+
     applicationCard.appendChild(applicationMenu);
+
+    //Application Options
+
+    const applicationOptions = document.createElement("div");
+
+    applicationOptions.classList.add("applications_card_options", "hidden");
+
+    applicationCard.appendChild(applicationOptions);
+
+    const editApplicationButton = document.createElement("button");
+
+    editApplicationButton.textContent = "Edit";
+
+    editApplicationButton.classList.add("applications_card_edit");
+
+    const deleteApplicationButton = document.createElement("button");
+
+    deleteApplicationButton.textContent = "Delete";
+
+    deleteApplicationButton.classList.add("applications_card_delete");
+
+    deleteApplicationButton.addEventListener("click", () => {
+        applications = applications.filter((item) => {
+            return item.id !== application.id;
+        });
+
+        localStorage.setItem("applications", JSON.stringify(applications));
+        renderApplications();
+    });
+
+    applicationOptions.appendChild(editApplicationButton);
+    applicationOptions.appendChild(deleteApplicationButton);
 
 
     // Application Menu Icon
@@ -407,7 +452,7 @@ applicationForm.addEventListener("submit", (e) => {
     const role = document.querySelector("#role").value;
     const date = document.querySelector("#date").value;
     const notes = document.querySelector("#notes").value;
-    const id = applications.length + 1;
+    const id = crypto.randomUUID();
 
     const newApplication = {
         id,
@@ -419,6 +464,8 @@ applicationForm.addEventListener("submit", (e) => {
     };
 
     applications.push(newApplication);
+
+    localStorage.setItem("applications", JSON.stringify(applications));
 
     renderApplications();
 
