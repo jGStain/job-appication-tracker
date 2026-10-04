@@ -308,6 +308,82 @@ main {
     border-top: 1px solid var(--clr-border);
 }
 
+.delete_modal.hidden {
+    display: none;
+}
+
+.delete_modal {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1.5rem;
+    z-index: 1000;
+}
+
+.delete_modal_content {
+    width: 100%;
+    max-width: 26rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.delete_modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete_modal_close {
+    background: none;
+    border: none;
+    color: var(--clr-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.delete_modal_message {
+    color: var(--clr-text);
+    margin-top: 1.5rem;
+}
+
+.delete_modal_warning {
+    margin-top: 0.5rem;
+    color: var(--clr-text-muted);
+    font-size: 0.875rem;
+}
+
+.delete_modal_actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.delete_modal_cancel,
+.delete_modal_confirm {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.delete_modal_cancel {
+    background-color: var(--clr-surface-light);
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text);
+}
+
+.delete_modal_confirm {
+    background-color: var(--clr-rejected);
+    border: none;
+    color: var(--clr-text);
+}
+
 .applications_company_logo {
     display: flex;
     justify-content: center;

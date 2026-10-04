@@ -26,6 +26,7 @@ let applications = [{
 
 let currentStatus = "All";
 let currentSearchTerm = "";
+let applicationToDelete = null;
 
 const savedApplications = localStorage.getItem("applications");
 
@@ -54,6 +55,14 @@ const addApplicationButton = document.querySelector(".app_header_add");
 const applicationModal = document.querySelector(".application_modal");
 
 const closeApplicationButton = document.querySelector(".application_form_close");
+
+const deleteModal = document.querySelector(".delete_modal");
+
+const deleteModalClose = document.querySelector(".delete_modal_close");
+
+const deleteModalCancel = document.querySelector(".delete_modal_cancel");
+
+const deleteModalConfirm = document.querySelector(".delete_modal_confirm");
 
 
 // ========================================
@@ -262,12 +271,9 @@ const createApplicationCard = application => {
     deleteApplicationButton.classList.add("applications_card_delete");
 
     deleteApplicationButton.addEventListener("click", () => {
-        applications = applications.filter((item) => {
-            return item.id !== application.id;
-        });
-
-        localStorage.setItem("applications", JSON.stringify(applications));
-        renderApplications();
+        applicationToDelete = application.id;
+        deleteModal.classList.remove("hidden");
+        applicationOptions.classList.add("hidden");
     });
 
     applicationOptions.appendChild(editApplicationButton);
@@ -330,6 +336,66 @@ const updateFilterCount = (status, countSelector) => {
     countElement.textContent = filteredApplications.length;
 };
 
+const updateFilterCounts = () => {
+    allApplicationsCount.textContent = applications.length;
+
+    updateFilterCount(
+        "Interested",
+        "#interestedCount"
+    );
+
+    updateFilterCount(
+        "Applied",
+        "#appliedCount"
+    );
+
+    updateFilterCount(
+        "Interview",
+        "#interviewCount"
+    );
+
+    updateFilterCount(
+        "Offer",
+        "#offerCount"
+    );
+
+    updateFilterCount(
+        "Rejected",
+        "#rejectedCount"
+    );
+};
+
+// Stats
+
+const updateStats = () => {
+
+    totalApplications.textContent = applications.length;
+
+    updateStat(
+    "Applied",
+    "#appliedApplications",
+    "#applied_percentage"
+    );
+
+    updateStat(
+        "Interview",
+        "#interviewApplications",
+        "#interview_percentage"
+    );
+
+    updateStat(
+        "Offer",
+        "#offersApplications",
+        "#offer_percentage"
+    );
+
+    updateStat(
+        "Rejected",
+        "#rejectedApplications",
+        "#reject_percentage"
+    );
+};
+
 //Remove applcation results
 
 const clearApplicationResults = () => {
@@ -365,79 +431,18 @@ const renderApplications = () => {
     };
 };
 
+const updateApplicationUI = () => {
+    renderApplications();
+    updateFilterCounts();
+    updateStats();
+};
+
 
 // ========================================
 // INITIAL PAGE SETUP
 // ========================================
 
-// Total Applications
-
-totalApplications.textContent = applications.length;
-
-
-// Stats
-
-updateStat(
-    "Applied",
-    "#appliedApplications",
-    "#applied_percentage"
-);
-
-updateStat(
-    "Interview",
-    "#interviewApplications",
-    "#interview_percentage"
-);
-
-updateStat(
-    "Offer",
-    "#offersApplications",
-    "#offer_percentage"
-);
-
-updateStat(
-    "Rejected",
-    "#rejectedApplications",
-    "#reject_percentage"
-);
-
-
-// Filter Counts
-
-allApplicationsCount.textContent = applications.length;
-
-updateFilterCount(
-    "Interested",
-    "#interestedCount"
-);
-
-updateFilterCount(
-    "Applied",
-    "#appliedCount"
-);
-
-updateFilterCount(
-    "Interview",
-    "#interviewCount"
-);
-
-updateFilterCount(
-    "Offer",
-    "#offerCount"
-);
-
-updateFilterCount(
-    "Rejected",
-    "#rejectedCount"
-);
-
-
-// Initial Application Cards
-
-applications.forEach((application) => {
-    createApplicationCard(application);
-});
-
+updateApplicationUI();
 
 // ========================================
 // EVENT LISTENERS
@@ -452,7 +457,7 @@ applicationForm.addEventListener("submit", (e) => {
     const role = document.querySelector("#role").value;
     const date = document.querySelector("#date").value;
     const notes = document.querySelector("#notes").value;
-    const id = crypto.randomUUID();
+    const id = Date.now();
 
     const newApplication = {
         id,
@@ -467,7 +472,7 @@ applicationForm.addEventListener("submit", (e) => {
 
     localStorage.setItem("applications", JSON.stringify(applications));
 
-    renderApplications();
+    updateApplicationUI();
 
     applicationForm.reset();
 
@@ -509,4 +514,26 @@ addApplicationButton.addEventListener("click", () => {
 closeApplicationButton.addEventListener("click", () => {
     applicationModal.classList.add("hidden");
     applicationForm.reset();
+});
+
+deleteModalCancel.addEventListener("click", () => {
+    deleteModal.classList.add("hidden");
+
+    applicationToDelete = null;
+});
+
+deleteModalClose.addEventListener("click", () => {
+    deleteModal.classList.add("hidden");
+    applicationToDelete = null;
+});
+
+deleteModalConfirm.addEventListener("click", () => {
+    applications = applications.filter((item) => {
+        return item.id !== applicationToDelete;
+    });
+
+    localStorage.setItem("applications", JSON.stringify(applications));
+    updateApplicationUI();
+    deleteModal.classList.add("hidden");
+    applicationToDelete = null;
 });
