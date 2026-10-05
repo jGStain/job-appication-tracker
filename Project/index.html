@@ -111,7 +111,7 @@
         <div class="application_modal hidden">
             <form id="add_application_form">
                 <div class="application_form_header">
-                    <h2>Add Application</h2>
+                    <h2 class="application_form_title">Add Application</h2>
                     <button 
                         class="application_form_close" 
                         type="button" 
@@ -130,6 +130,20 @@
                 <div class="application_form_group">
                     <label for="date">Date</label>
                     <input class="application_form_control" type="date" id="date" name="date">
+                </div>
+                <div class="application_form_group">
+                    <label for="status">Status</label>
+                    <select
+                        class="application_form_control"
+                        id="status"
+                        name="status"
+                    >
+                        <option value="Interested">Interested</option>
+                        <option value="Applied">Applied</option>
+                        <option value="Interview">Interview</option>
+                        <option value="Offer">Offer</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
                 </div>
                 <div class="application_form_group">
                     <label for="notes">Notes</label>

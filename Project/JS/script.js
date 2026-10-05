@@ -27,6 +27,7 @@ let applications = [{
 let currentStatus = "All";
 let currentSearchTerm = "";
 let applicationToDelete = null;
+let applicationToEdit = null;
 
 const savedApplications = localStorage.getItem("applications");
 
@@ -63,6 +64,10 @@ const deleteModalClose = document.querySelector(".delete_modal_close");
 const deleteModalCancel = document.querySelector(".delete_modal_cancel");
 
 const deleteModalConfirm = document.querySelector(".delete_modal_confirm");
+
+const applicationFormTitle = document.querySelector(".application_form_title");
+
+const applicationFormSubmit = document.querySelector(".application_form_submit");
 
 
 // ========================================
@@ -276,6 +281,19 @@ const createApplicationCard = application => {
         applicationOptions.classList.add("hidden");
     });
 
+    editApplicationButton.addEventListener("click", () => {
+        applicationToEdit = application.id;
+        document.querySelector("#company").value = application.company;
+        document.querySelector("#role").value = application.role;
+        document.querySelector("#date").value = application.date;
+        document.querySelector("#status").value = application.status;
+        document.querySelector("#notes").value = application.notes;
+        applicationFormTitle.textContent = "Edit Application";
+        applicationFormSubmit.textContent = "Save Changes";
+        applicationModal.classList.remove("hidden");
+        applicationOptions.classList.add("hidden");
+    });
+
     applicationOptions.appendChild(editApplicationButton);
     applicationOptions.appendChild(deleteApplicationButton);
 
@@ -456,21 +474,40 @@ applicationForm.addEventListener("submit", (e) => {
     const company = document.querySelector("#company").value;
     const role = document.querySelector("#role").value;
     const date = document.querySelector("#date").value;
+    const status = document.querySelector("#status").value;
     const notes = document.querySelector("#notes").value;
-    const id = Date.now();
 
-    const newApplication = {
-        id,
-        company,
-        role,
-        status: "Applied",
-        date,
-        notes
-    };
+    if (applicationToEdit !== null) {
+        const application = applications.find((application) => applicationToEdit === application.id);
+        application.company = company;
+        application.role = role;
+        application.date = date;
+        application.status = status;
+        application.notes = notes;
+    } else {
+        const id = Date.now();
 
-    applications.push(newApplication);
+        const newApplication = {
+            id,
+            company,
+            role,
+            status,
+            date,
+            notes
+        };
+
+        applications.push(newApplication);
+
+    }
 
     localStorage.setItem("applications", JSON.stringify(applications));
+
+    updateApplicationUI();
+
+    applicationForm.reset();
+    applicationModal.classList.add("hidden");
+
+    applicationToEdit = null;
 
     updateApplicationUI();
 
@@ -507,6 +544,9 @@ applicationSearch.addEventListener("input", () => {
 
 addApplicationButton.addEventListener("click", () => {
     applicationModal.classList.remove("hidden");
+    applicationFormTitle.textContent = "Add Application";
+    applicationFormSubmit.textContent = "Add Application";
+    applicationToEdit = null;
 });
 
 // Close Application Form
@@ -514,6 +554,7 @@ addApplicationButton.addEventListener("click", () => {
 closeApplicationButton.addEventListener("click", () => {
     applicationModal.classList.add("hidden");
     applicationForm.reset();
+    applicationToEdit = null;
 });
 
 deleteModalCancel.addEventListener("click", () => {
