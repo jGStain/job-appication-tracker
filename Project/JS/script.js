@@ -287,6 +287,8 @@ const createApplicationCard = application => {
         document.querySelector("#role").value = application.role;
         document.querySelector("#date").value = application.date;
         document.querySelector("#status").value = application.status;
+        document.querySelector("#salary").value = application.salary || "";
+        document.querySelector("#jobUrl").value = application.jobUrl || "";
         document.querySelector("#notes").value = application.notes;
         applicationFormTitle.textContent = "Edit Application";
         applicationFormSubmit.textContent = "Save Changes";
@@ -475,6 +477,8 @@ applicationForm.addEventListener("submit", (e) => {
     const role = document.querySelector("#role").value;
     const date = document.querySelector("#date").value;
     const status = document.querySelector("#status").value;
+    const salary = document.querySelector("#salary").value;
+    const jobUrl = document.querySelector("#jobUrl").value;
     const notes = document.querySelector("#notes").value;
 
     if (applicationToEdit !== null) {
@@ -483,6 +487,8 @@ applicationForm.addEventListener("submit", (e) => {
         application.role = role;
         application.date = date;
         application.status = status;
+        application.salary = salary;
+        application.jobUrl = jobUrl;
         application.notes = notes;
     } else {
         const id = Date.now();
@@ -493,6 +499,8 @@ applicationForm.addEventListener("submit", (e) => {
             role,
             status,
             date,
+            salary,
+            jobUrl,
             notes
         };
 

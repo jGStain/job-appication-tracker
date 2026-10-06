@@ -33,9 +33,6 @@
                 type="search" 
                 placeholder="Search applications" 
                 aria-label="Application search field">
-            <button class="application_search_btn" aria-label="Filter applications">
-                ☰
-            </button>
         </div>
 
         <div class="status_container">
@@ -146,7 +143,27 @@
                     </select>
                 </div>
                 <div class="application_form_group">
-                    <label for="notes">Notes</label>
+                    <label for="salary">Salary <span>(optional)</span></label>
+                    <input
+                        class="application_form_control"
+                        type="text"
+                        id="salary"
+                        name="salary"
+                        placeholder="e.g. £30,000 - £35,000"
+                    >
+                </div>
+                <div class="application_form_group">
+                    <label for="jobUrl">Job URL <span>(optional)</span></label>
+                    <input
+                        class="application_form_control"
+                        type="url"
+                        id="jobUrl"
+                        name="jobUrl"
+                        placeholder="https://example.com/job"
+                    >
+                </div>
+                <div class="application_form_group">
+                    <label for="notes">Initial Notes <span>(optional)</span></label>
                     <textarea class="application_form_control" id="notes" name="notes"></textarea>
                 </div>
 
