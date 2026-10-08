@@ -28,6 +28,7 @@ let currentStatus = "All";
 let currentSearchTerm = "";
 let applicationToDelete = null;
 let applicationToEdit = null;
+let selectedApplication = null;
 
 const savedApplications = localStorage.getItem("applications");
 
@@ -68,6 +69,14 @@ const deleteModalConfirm = document.querySelector(".delete_modal_confirm");
 const applicationFormTitle = document.querySelector(".application_form_title");
 
 const applicationFormSubmit = document.querySelector(".application_form_submit");
+
+const applicationHeader = document.querySelector(".app_header");
+
+const applicationDetails = document.querySelector(".application_details");
+
+const applicationDashboard = document.querySelector(".applications_dashboard");
+
+const applicationDetailsBack = document.querySelector(".application_details_back");
 
 
 // ========================================
@@ -111,13 +120,34 @@ const createApplicationCard = application => {
 
     // Company Logo
 
-    const companyLogo = document.createElement("div");
+    const companyLogo = document.createElement("button");
+
+    companyLogo.type = "button";
+
+    companyLogo.setAttribute(
+        "aria-label", 
+        `View ${application.company} application details`
+    );
 
     companyLogo.classList.add("applications_company_logo");
 
     applicationCard.appendChild(companyLogo);
 
     companyLogo.textContent = initials;
+
+    companyLogo.addEventListener("click", () => {
+        selectedApplication = application.id;
+        applicationHeader.classList.add("hidden");
+        applicationDetails.classList.remove("hidden");
+        applicationDashboard.classList.add("hidden");
+    });
+
+    applicationDetailsBack.addEventListener("click", () => {
+        selectedApplication = null;
+        applicationHeader.classList.remove("hidden");
+        applicationDetails.classList.add("hidden");
+        applicationDashboard.classList.remove("hidden");
+    });
 
 
     // Application Information

@@ -583,3 +583,32 @@ main {
     font-size: 1rem;
     cursor: pointer;
 }
+
+.app_header.hidden {
+    display: none;
+}
+
+.application_details.hidden {
+    display: none;
+}
+
+.applications_dashboard.hidden {
+    display: none;
+}
+
+.application_details_header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+}
+
+.application_details_back {
+    position: absolute;
+    left: 0;
+}
+
+.application_details_header h2 {
+    text-align: center;
+}

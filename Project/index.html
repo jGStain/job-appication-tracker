@@ -24,85 +24,86 @@
     </header>
 
     <main>
+        <section class="applications_dashboard">
+            <h2 class="applications_title">Applications</h2>
 
-        <h2 class="applications_title">Applications</h2>
-
-        <div class="search_controls_container">
-            <input 
-                class="application_search"
-                type="search" 
-                placeholder="Search applications" 
-                aria-label="Application search field">
-        </div>
-
-        <div class="status_container">
-            <button class="status_filter active" data-status="All">
-                All <span id="allCount"></span>
-            </button>
-            <button class="status_filter" data-status="Interested">
-                Interested <span id="interestedCount"></span>
-            </button>
-            <button class="status_filter" data-status="Applied">
-                Applied <span id="appliedCount"></span>
-            </button>
-            <button class="status_filter" data-status="Interview">
-                Interview <span id="interviewCount"></span>
-            </button>
-            <button class="status_filter" data-status="Offer">
-                Offer <span id="offerCount"></span>
-            </button>
-            <button class="status_filter" data-status="Rejected">
-                Rejected <span id="rejectedCount"></span>
-            </button>
-        </div>
-
-        <section class="stats_section">
-            <div class="stats_card">
-                <h3 class="stats_card_title">Total</h3>
-                <p class="stats_card_value" id="totalApplications"></p>
-                <p class="stats_card_detail">All time</p>
-                <div class="stats_card_icon">
-                    <i class="fa-regular fa-clipboard" aria-hidden="true"></i>
-                </div>
+            <div class="search_controls_container">
+                <input 
+                    class="application_search"
+                    type="search" 
+                    placeholder="Search applications" 
+                    aria-label="Application search field">
             </div>
-            <div class="stats_card">
-                <h3 class="stats_card_title">Applied</h3>
-                <p class="stats_card_value" id="appliedApplications"></p>
-                <p class="stats_card_detail" id="applied_percentage"></p>
-                <div class="stats_card_icon">
-                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div class="stats_card">
-                <h3 class="stats_card_title">Interview</h3>
-                <p class="stats_card_value" id="interviewApplications"></p>
-                <p class="stats_card_detail" id="interview_percentage"></p>
-                <div class="stats_card_icon">
-                    <i class="fa-solid fa-user-group" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div class="stats_card">
-                <h3 class="stats_card_title">Offers</h3>
-                <p class="stats_card_value" id="offersApplications"></p>
-                <p class="stats_card_detail" id="offer_percentage"></p>
-                <div class="stats_card_icon">
-                    <i class="fa-solid fa-check" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div class="stats_card">
-                <h3 class="stats_card_title">Rejected</h3>
-                <p class="stats_card_value" id="rejectedApplications"></p>
-                <p class="stats_card_detail" id="reject_percentage"></p>
-                <div class="stats_card_icon">
-                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                </div>
-            </div>
-        </section>
 
-        <section class="applications_section">
-            <h2 class="applications_section_title">Recent Applications</h2>
+            <div class="status_container">
+                <button class="status_filter active" data-status="All">
+                    All <span id="allCount"></span>
+                </button>
+                <button class="status_filter" data-status="Interested">
+                    Interested <span id="interestedCount"></span>
+                </button>
+                <button class="status_filter" data-status="Applied">
+                    Applied <span id="appliedCount"></span>
+                </button>
+                <button class="status_filter" data-status="Interview">
+                    Interview <span id="interviewCount"></span>
+                </button>
+                <button class="status_filter" data-status="Offer">
+                    Offer <span id="offerCount"></span>
+                </button>
+                <button class="status_filter" data-status="Rejected">
+                    Rejected <span id="rejectedCount"></span>
+                </button>
+            </div>
 
-            
+            <section class="stats_section">
+                <div class="stats_card">
+                    <h3 class="stats_card_title">Total</h3>
+                    <p class="stats_card_value" id="totalApplications"></p>
+                    <p class="stats_card_detail">All time</p>
+                    <div class="stats_card_icon">
+                        <i class="fa-regular fa-clipboard" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="stats_card">
+                    <h3 class="stats_card_title">Applied</h3>
+                    <p class="stats_card_value" id="appliedApplications"></p>
+                    <p class="stats_card_detail" id="applied_percentage"></p>
+                    <div class="stats_card_icon">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="stats_card">
+                    <h3 class="stats_card_title">Interview</h3>
+                    <p class="stats_card_value" id="interviewApplications"></p>
+                    <p class="stats_card_detail" id="interview_percentage"></p>
+                    <div class="stats_card_icon">
+                        <i class="fa-solid fa-user-group" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="stats_card">
+                    <h3 class="stats_card_title">Offers</h3>
+                    <p class="stats_card_value" id="offersApplications"></p>
+                    <p class="stats_card_detail" id="offer_percentage"></p>
+                    <div class="stats_card_icon">
+                        <i class="fa-solid fa-check" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="stats_card">
+                    <h3 class="stats_card_title">Rejected</h3>
+                    <p class="stats_card_value" id="rejectedApplications"></p>
+                    <p class="stats_card_detail" id="reject_percentage"></p>
+                    <div class="stats_card_icon">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </section>
+
+            <section class="applications_section">
+                <h2 class="applications_section_title">Recent Applications</h2>
+
+                
+            </section>
         </section>
 
         <div class="application_modal hidden">
@@ -201,6 +202,20 @@
                 </div>
             </div>
         </div>
+
+        <section class="application_details hidden">
+            <div class="application_details_header">
+                <button
+                    class="application_details_back"
+                    type="button"
+                    aria-label="Back to applications"
+                >
+                    ←
+                </button>
+
+                <h2>Application Details</h2>
+            </div>
+        </section>
 
     </main>
     
