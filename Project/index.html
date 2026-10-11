@@ -1,224 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <script src="https://kit.fontawesome.com/052a045632.js" crossorigin="anonymous"></script>
-    <title>Job Application Tracker</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="css/reset.css" rel="stylesheet"/>
+    <link href="css/variables.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/responsive.css" rel="stylesheet"/>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/052a045632.js">
+    </script>
+    <title>
+        Job Application Tracker
+    </title>
 </head>
 <body>
     <header class="app_header">
-        <button class="app_header_menu" aria-label="Open menu">
+        <button aria-label="Open menu" class="app_header_menu">
             ☰
         </button>
-
-        <h1 class="app_header_title">Job Tracker</h1>
-
-        <button class="app_header_add" aria-label="Add application">
+        <h1 class="app_header_title">
+            Job Tracker
+        </h1>
+        <button aria-label="Add application" class="app_header_add">
             +
         </button>
     </header>
+<main>
+<section class="applications_dashboard">
+    <h2 class="applications_title">
+        Applications
+    </h2>
+    <div class="search_controls_container">
+        <input aria-label="Application search field" class="application_search" placeholder="Search applications" type="search"/>
+    </div>
+    <div class="status_container">
+        <button class="status_filter active" data-status="All">
+            All
+            <span id="allCount">
+            </span>
+        </button>
+        <button class="status_filter" data-status="Interested">
+            Interested
+            <span id="interestedCount">
+            </span>
+        </button>
+        <button class="status_filter" data-status="Applied">
+            Applied
+            <span id="appliedCount">
+            </span>
+        </button>
+        <button class="status_filter" data-status="Interview">
+            Interview
+            <span id="interviewCount">
+            </span>
+        </button>
+        <button class="status_filter" data-status="Offer">
+            Offer
+            <span id="offerCount">
+            </span>
+        </button>
+        <button class="status_filter" data-status="Rejected">
+            Rejected
+            <span id="rejectedCount">
+            </span>
+        </button>
+    </div>
 
-    <main>
-        <section class="applications_dashboard">
-            <h2 class="applications_title">Applications</h2>
-
-            <div class="search_controls_container">
-                <input 
-                    class="application_search"
-                    type="search" 
-                    placeholder="Search applications" 
-                    aria-label="Application search field">
-            </div>
-
-            <div class="status_container">
-                <button class="status_filter active" data-status="All">
-                    All <span id="allCount"></span>
-                </button>
-                <button class="status_filter" data-status="Interested">
-                    Interested <span id="interestedCount"></span>
-                </button>
-                <button class="status_filter" data-status="Applied">
-                    Applied <span id="appliedCount"></span>
-                </button>
-                <button class="status_filter" data-status="Interview">
-                    Interview <span id="interviewCount"></span>
-                </button>
-                <button class="status_filter" data-status="Offer">
-                    Offer <span id="offerCount"></span>
-                </button>
-                <button class="status_filter" data-status="Rejected">
-                    Rejected <span id="rejectedCount"></span>
-                </button>
-            </div>
-
-            <section class="stats_section">
-                <div class="stats_card">
-                    <h3 class="stats_card_title">Total</h3>
-                    <p class="stats_card_value" id="totalApplications"></p>
-                    <p class="stats_card_detail">All time</p>
-                    <div class="stats_card_icon">
-                        <i class="fa-regular fa-clipboard" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="stats_card">
-                    <h3 class="stats_card_title">Applied</h3>
-                    <p class="stats_card_value" id="appliedApplications"></p>
-                    <p class="stats_card_detail" id="applied_percentage"></p>
-                    <div class="stats_card_icon">
-                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="stats_card">
-                    <h3 class="stats_card_title">Interview</h3>
-                    <p class="stats_card_value" id="interviewApplications"></p>
-                    <p class="stats_card_detail" id="interview_percentage"></p>
-                    <div class="stats_card_icon">
-                        <i class="fa-solid fa-user-group" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="stats_card">
-                    <h3 class="stats_card_title">Offers</h3>
-                    <p class="stats_card_value" id="offersApplications"></p>
-                    <p class="stats_card_detail" id="offer_percentage"></p>
-                    <div class="stats_card_icon">
-                        <i class="fa-solid fa-check" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="stats_card">
-                    <h3 class="stats_card_title">Rejected</h3>
-                    <p class="stats_card_value" id="rejectedApplications"></p>
-                    <p class="stats_card_detail" id="reject_percentage"></p>
-                    <div class="stats_card_icon">
-                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </section>
-
-            <section class="applications_section">
-                <h2 class="applications_section_title">Recent Applications</h2>
-
-                
-            </section>
-        </section>
-
-        <div class="application_modal hidden">
-            <form id="add_application_form">
-                <div class="application_form_header">
-                    <h2 class="application_form_title">Add Application</h2>
-                    <button 
-                        class="application_form_close" 
-                        type="button" 
-                        aria-label="Close Application Form">
-                        ×
-                    </button>
-                </div>
-                <div class="application_form_group">
-                    <label for="company">Company</label>
-                    <input class="application_form_control" type="text" id="company" name="company" required>
-                </div>
-                <div class="application_form_group">
-                    <label for="role">Role</label>
-                    <input class="application_form_control" type="text" id="role" name="role" required>
-                </div>
-                <div class="application_form_group">
-                    <label for="date">Date</label>
-                    <input class="application_form_control" type="date" id="date" name="date">
-                </div>
-                <div class="application_form_group">
-                    <label for="status">Status</label>
-                    <select
-                        class="application_form_control"
-                        id="status"
-                        name="status"
-                    >
-                        <option value="Interested">Interested</option>
-                        <option value="Applied" selected>Applied</option>
-                        <option value="Interview">Interview</option>
-                        <option value="Offer">Offer</option>
-                        <option value="Rejected">Rejected</option>
-                    </select>
-                </div>
-                <div class="application_form_group">
-                    <label for="salary">Salary <span>(optional)</span></label>
-                    <input
-                        class="application_form_control"
-                        type="text"
-                        id="salary"
-                        name="salary"
-                        placeholder="e.g. £30,000 - £35,000"
-                    >
-                </div>
-                <div class="application_form_group">
-                    <label for="jobUrl">Job URL <span>(optional)</span></label>
-                    <input
-                        class="application_form_control"
-                        type="url"
-                        id="jobUrl"
-                        name="jobUrl"
-                        placeholder="https://example.com/job"
-                    >
-                </div>
-                <div class="application_form_group">
-                    <label for="notes">Initial Notes <span>(optional)</span></label>
-                    <textarea class="application_form_control" id="notes" name="notes"></textarea>
-                </div>
-
-                <button class="application_form_submit" type="submit">Add Application</button>
-            </form>
-        </div>
-
-        <div class="delete_modal hidden">
-            <div class="delete_modal_content">
-                <div class="delete_modal_header">
-                    <h2>Delete Application</h2>
-                    <button 
-                        class="delete_modal_close" 
-                        type="button" 
-                        aria-label="Close delete confirmation"
-                        >
-                        ×
-                    </button>
-                </div>
-                <p class="delete_modal_message">Are you sure you want to delete this application?</p>
-                <p class="delete_modal_warning">This action cannot be undone.</p>
-                <div class="delete_modal_actions">
-                    <button 
-                        class="delete_modal_cancel" 
-                        type="button"
-                        >
-                        Cancel
-                    </button>
-                    <button 
-                        class="delete_modal_confirm" 
-                        type="button"
-                        >
-                        Delete
-                    </button>
-                </div>
+    <section class="stats_section">
+        <div class="stats_card">
+            <h3 class="stats_card_title">
+                Total
+            </h3>
+            <p class="stats_card_value" id="totalApplications">
+            </p>
+            <p class="stats_card_detail">
+                All time
+            </p>
+            <div class="stats_card_icon">
+            <i aria-hidden="true" class="fa-regular fa-clipboard">
+            </i>
             </div>
         </div>
+        <div class="stats_card">
+            <h3 class="stats_card_title">
+            Applied
+            </h3>
+            <p class="stats_card_value" id="appliedApplications">
+            </p>
+            <p class="stats_card_detail" id="applied_percentage">
+            </p>
+            <div class="stats_card_icon">
+                <i aria-hidden="true" class="fa-solid fa-paper-plane">
+                </i>
+            </div>
+        </div>
+        <div class="stats_card">
+            <h3 class="stats_card_title">
+            Interview
+            </h3>
+            <p class="stats_card_value" id="interviewApplications">
+            </p>
+            <p class="stats_card_detail" id="interview_percentage">
+            </p>
+            <div class="stats_card_icon">
+            <i aria-hidden="true" class="fa-solid fa-user-group">
+            </i>
+            </div>
+        </div>
+        <div class="stats_card">
+            <h3 class="stats_card_title">
+            Offers
+            </h3>
+            <p class="stats_card_value" id="offersApplications">
+            </p>
+            <p class="stats_card_detail" id="offer_percentage">
+            </p>
+            <div class="stats_card_icon">
+            <i aria-hidden="true" class="fa-solid fa-check">
+            </i>
+            </div>
+        </div>
+        <div class="stats_card">
+            <h3 class="stats_card_title">
+            Rejected
+            </h3>
+            <p class="stats_card_value" id="rejectedApplications">
+            </p>
+            <p class="stats_card_detail" id="reject_percentage">
+            </p>
+            <div class="stats_card_icon">
+            <i aria-hidden="true" class="fa-solid fa-xmark">
+            </i>
+            </div>
+        </div>
+    </section>
 
-        <section class="application_details hidden">
-            <div class="application_details_header">
+    <section class="applications_section">
+        <h2 class="applications_section_title">
+            Recent Applications
+        </h2>
+    </section>
+
+</section>
+
+<div class="application_modal hidden">
+    <form id="add_application_form">
+    <div class="application_form_header">
+        <h2 class="application_form_title">
+        Add Application
+        </h2>
+        <button aria-label="Close Application Form" class="application_form_close" type="button">
+        ×
+        </button>
+    </div>
+    <div class="application_form_group">
+        <label for="company">
+        Company
+        </label>
+        <input class="application_form_control" id="company" name="company" required="" type="text"/>
+    </div>
+    <div class="application_form_group">
+        <label for="role">
+        Role
+        </label>
+        <input class="application_form_control" id="role" name="role" required="" type="text"/>
+    </div>
+    <div class="application_form_group">
+        <label for="date">
+        Date
+        </label>
+        <input class="application_form_control" id="date" name="date" type="date"/>
+    </div>
+    <div class="application_form_group">
+        <label for="status">
+            Status
+        </label>
+        <select class="application_form_control" id="status" name="status">
+            <option value="Interested">
+                Interested
+            </option>
+            <option selected="" value="Applied">
+                Applied
+            </option>
+            <option value="Interview">
+                Interview
+            </option>
+            <option value="Offer">
+                Offer
+            </option>
+            <option value="Rejected">
+                Rejected
+            </option>
+        </select>
+    </div>
+    <div class="application_form_group">
+        <label for="salary">
+            Salary
+        <span>
+            (optional)
+        </span>
+        </label>
+        <input class="application_form_control" id="salary" name="salary" placeholder="e.g. £30,000 - £35,000" type="text"/>
+    </div>
+    <div class="application_form_group">
+        <label for="jobUrl">
+        Job URL
+        <span>
+            (optional)
+        </span>
+        </label>
+        <input class="application_form_control" id="jobUrl" name="jobUrl" placeholder="https://example.com/job" type="url"/>
+    </div>
+    <div class="application_form_group">
+        <label for="notes">
+        Initial Notes
+        <span>
+            (optional)
+        </span>
+        </label>
+        <textarea class="application_form_control" id="notes" name="notes"></textarea>
+    </div>
+    <button class="application_form_submit" type="submit">
+        Add Application
+    </button>
+    </form>
+</div>
+<div class="delete_modal hidden">
+    <div class="delete_modal_content">
+        <div class="delete_modal_header">
+            <h2>
+                Delete Application
+            </h2>
+            <button aria-label="Close delete confirmation" class="delete_modal_close" type="button">
+                ×
+            </button>
+        </div>
+        <p class="delete_modal_message">
+            Are you sure you want to delete this application?
+        </p>
+        <p class="delete_modal_warning">
+            This action cannot be undone.
+        </p>
+        <div class="delete_modal_actions">
+            <button class="delete_modal_cancel" type="button">
+                Cancel
+            </button>
+            <button class="delete_modal_confirm" type="button">
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+   <!-- APPLICATION DETAILS -->
+<section class="application_details hidden">
+    <div class="application_details_header">
+        <button aria-label="Back to applications" class="application_details_back" type="button">
+            <i aria-hidden="true" class="fa-solid fa-arrow-left">
+            </i>
+        </button>
+        <h2>
+            Application Details
+        </h2>
+        <span aria-hidden="true" class="application_details_header_spacer">
+        </span>
+    </div>
+    <!-- Application summary: role, company and status -->
+    <div class="application_details_summary">
+        <div aria-hidden="true" class="application_details_company_logo">
+        </div>
+        <div class="application_details_summary_info">
+            <h3 class="application_details_role">
+            </h3>
+            <p class="application_details_company">
+            </p>
+        </div>
+        <p class="application_details_status">
+        </p>
+    </div>
+    <!-- Key information card -->
+    <div class="application_details_info_card">
+        <div class="application_details_salary_group">
+            <p class="application_details_label">Salary</p>
+            <p class="application_details_salary"></p>
+        </div>
+
+        <div class="application_details_date_group">
+            <p class="application_details_label">Date Applied</p>
+            <p class="application_details_date"></p>
+        </div>
+
+        <div class="application_details_url_group">
+            <p class="application_details_label">Job URL</p>
+            <a
+                class="application_details_url"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                View Job Advertisement
+            </a>
+        </div>
+    </div>
+    <!-- Initial notes -->
+    <section class="application_details_initial_notes">
+        <h3 class="application_details_section_title">
+        Initial Notes
+        </h3>
+        <div class="application_details_notes_group">
+            <p class="application_details_notes">
+            </p>
+        </div>
+    </section>
+    <!-- Additional notes: existing functionality and selectors preserved -->
+    <section class="application_details_additional_notes">
+        <div class="application_details_additional_notes_header">
+        <h3 class="application_details_section_title">
+        Additional Notes
+        </h3>
+        <button class="application_details_add_note" type="button">
+        + Add Note
+        </button>
+        </div>
+        <div class="application_details_note_form hidden">
+            <label for="additional_note">
+                New Note
+            </label>
+            <textarea class="application_details_note_input" id="additional_note" placeholder="Enter your note..."></textarea>
+            <div class="application_details_note_actions">
+                <button class="application_details_note_save" type="button">
+                    Save Note
+                </button>
+                <button class="application_details_note_cancel" type="button">
+                    Cancel
+                </button>
+            </div>
+        </div>
+        <div class="application_details_notes_list">
+        </div>
+    </section>
+    <!-- Timeline will be implemented with Important Dates -->
+    <section class="application_details_timeline">
+        <div class="application_details_timeline_header">
+            <h3 class="application_details_section_title">
+                Important Dates
+            </h3>
+
+            <button
+                class="application_details_add_event"
+                type="button"
+            >
+                + Add Event
+            </button>
+        </div>
+
+        <div class="application_details_event_form hidden">
+            <label for="event_title">Event Title</label>
+            <input
+                id="event_title"
+                class="application_details_event_title"
+                type="text"
+                placeholder="e.g. First Interview"
+            >
+
+            <label for="event_date">Date</label>
+            <input
+                id="event_date"
+                class="application_details_event_date"
+                type="date"
+            >
+
+            <label for="event_description">
+                Description (optional)
+            </label>
+            <textarea
+                id="event_description"
+                class="application_details_event_description"
+                placeholder="Add details about this event..."
+            ></textarea>
+
+            <div class="application_details_event_actions">
                 <button
-                    class="application_details_back"
+                    class="application_details_event_save"
                     type="button"
-                    aria-label="Back to applications"
                 >
-                    ←
+                    Save Event
                 </button>
 
-                <h2>Application Details</h2>
+                <button
+                    class="application_details_event_cancel"
+                    type="button"
+                >
+                    Cancel
+                </button>
             </div>
-        </section>
+        </div>
 
-    </main>
-    
-    <script src="JS/script.js"></script>
+        <div class="application_details_timeline_list"></div>
+    </section>
+</section>
+</main>
+<script src="JS/script.js">
+</script>
 </body>
 </html>
+

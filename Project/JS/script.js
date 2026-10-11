@@ -78,6 +78,49 @@ const applicationDashboard = document.querySelector(".applications_dashboard");
 
 const applicationDetailsBack = document.querySelector(".application_details_back");
 
+const applicationDetailsCompany = document.querySelector(".application_details_company");
+
+const applicationDetailsRole = document.querySelector(".application_details_role");
+
+const applicationDetailsStatus = document.querySelector(".application_details_status");
+
+const applicationDetailsSalary = document.querySelector(".application_details_salary");
+
+const applicationDetailsDate = document.querySelector(".application_details_date");
+
+const applicationDetailsUrl = document.querySelector(".application_details_url");
+
+const applicationDetailsNotes = document.querySelector(".application_details_notes");
+
+const addNoteButton = document.querySelector(".application_details_add_note");
+
+const additionalNoteForm = document.querySelector(".application_details_note_form");
+
+const cancelNoteButton = document.querySelector(".application_details_note_cancel");
+
+const additionalNoteInput = document.querySelector(".application_details_note_input");
+
+const saveNoteButton = document.querySelector(".application_details_note_save");
+
+const additionalNotesList = document.querySelector(".application_details_notes_list");
+
+const applicationDetailsLogo = document.querySelector(".application_details_company_logo");
+
+const addEventButton = document.querySelector(".application_details_add_event");
+
+const eventForm = document.querySelector(".application_details_event_form");
+
+const eventTitleInput = document.querySelector(".application_details_event_title");
+
+const eventDateInput = document.querySelector(".application_details_event_date");
+
+const eventDescriptionInput = document.querySelector(".application_details_event_description");
+
+const saveEventButton = document.querySelector(".application_details_event_save");
+
+const cancelEventButton = document.querySelector(".application_details_event_cancel");
+
+const timelineList = document.querySelector(".application_details_timeline_list");
 
 // ========================================
 // FUNCTIONS
@@ -137,18 +180,70 @@ const createApplicationCard = application => {
 
     companyLogo.addEventListener("click", () => {
         selectedApplication = application.id;
+        const applicationData = applications.find((application) => selectedApplication === application.id);
+        const companyInitials = applicationData.company
+            .trim()
+            .split(/\s+/)
+            .map(word => word.charAt(0))
+            .join("")
+            .toUpperCase();
+        
+        applicationDetailsLogo.textContent = companyInitials;
+        applicationDetailsCompany.textContent = applicationData.company;
+        applicationDetailsRole.textContent = applicationData.role;
+        applicationDetailsStatus.textContent = applicationData.status;
+        applicationDetailsStatus.classList.remove(
+            "status_interested", 
+            "status_applied", 
+            "status_interview", 
+            "status_offer", 
+            "status_rejected"
+        );
+        applicationDetailsStatus.classList.add(`status_${applicationData.status.toLowerCase()}`);
+        applicationDetailsSalary.textContent = applicationData.salary || "Salary not specified";
+        if (applicationData.date) {
+            const applicationDateObject = new Date(applicationData.date);
+
+            const dateOptions = {
+                day: "numeric",
+                month: "short",
+                year: "numeric"
+            };
+
+            const formattedDate =
+                applicationDateObject.toLocaleDateString(
+                    "en-GB",
+                    dateOptions
+                );
+            
+            applicationDetailsDate.textContent = formattedDate;
+        } else {
+            applicationDetailsDate.textContent = "Date not specified";
+        }
+
+        if (applicationData.jobUrl) {
+            applicationDetailsUrl.href = applicationData.jobUrl;
+            applicationDetailsUrl.textContent = "View Job Advertisement";
+        } else {
+            applicationDetailsUrl.removeAttribute("href");
+            applicationDetailsUrl.textContent = "Job URL not specified";
+        }
+
+        applicationDetailsNotes.textContent = applicationData.notes || "No initial notes added";
+        additionalNotesList.innerHTML = "";
+
+        const savedNotes = applicationData.additionalNotes || [];
+
+        savedNotes.forEach(note => {
+            createAdditionalNote(note, applicationData);
+        });
+
+        renderTimeline(applicationData);
+        
         applicationHeader.classList.add("hidden");
         applicationDetails.classList.remove("hidden");
         applicationDashboard.classList.add("hidden");
     });
-
-    applicationDetailsBack.addEventListener("click", () => {
-        selectedApplication = null;
-        applicationHeader.classList.remove("hidden");
-        applicationDetails.classList.add("hidden");
-        applicationDashboard.classList.remove("hidden");
-    });
-
 
     // Application Information
 
@@ -487,6 +582,82 @@ const updateApplicationUI = () => {
     updateStats();
 };
 
+const createAdditionalNote = (note, applicationData) => {
+    const noteElement = document.createElement("p");
+    noteElement.classList.add("application_details_additional_note");
+    const deleteNoteButton = document.createElement("button");
+    deleteNoteButton.classList.add("application_details_note_delete");
+    deleteNoteButton.type = "button";
+    deleteNoteButton.setAttribute("aria-label", "Delete note");
+    const deleteNoteIcon = document.createElement("i");
+    deleteNoteIcon.classList.add("fa-solid", "fa-trash-can");
+    deleteNoteIcon.setAttribute("aria-hidden", "true");
+    deleteNoteButton.appendChild(deleteNoteIcon);
+    noteElement.textContent = note.text;
+    noteElement.appendChild(deleteNoteButton);
+    additionalNotesList.appendChild(noteElement);
+
+    deleteNoteButton.addEventListener("click", () => {
+        const noteIndex = applicationData.additionalNotes.findIndex(item => item.id === note.id);
+        if (noteIndex !== -1) {
+            applicationData.additionalNotes.splice(noteIndex, 1);
+            localStorage.setItem("applications", JSON.stringify(applications));
+            noteElement.remove();
+        }
+    });
+};
+
+const renderTimeline = applicationData => {
+    timelineList.innerHTML = "";
+
+    const events = [...(applicationData.importantDates || [])];
+
+    if (applicationData.date) {
+        events.push({
+            id: "application-submitted",
+            title: "Application Submitted",
+            date: applicationData.date,
+            description: "Application submitted",
+            automatic: true
+        });
+    }
+
+    const sortedEvents = [...events].sort(
+        (a, b) => a.date.localeCompare(b.date)
+    );
+
+    sortedEvents.forEach(event => {
+        const eventElement = document.createElement("div");
+        eventElement.classList.add("application_details_timeline_event");
+        if (event.automatic) {
+            eventElement.classList.add("timeline_event_submitted");
+        }
+
+        const eventTitle = document.createElement("h4");
+        eventTitle.textContent = event.title;
+
+        const eventDate = document.createElement("p");
+        eventDate.textContent = new Date(
+            `${event.date}T00:00:00`
+        ).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        });
+
+        const eventDescription = document.createElement("p");
+        eventDescription.textContent = event.description;
+
+        eventElement.append(
+            eventTitle,
+            eventDate,
+            eventDescription
+        );
+
+        timelineList.appendChild(eventElement);
+    });
+};
+
 
 // ========================================
 // INITIAL PAGE SETUP
@@ -616,3 +787,107 @@ deleteModalConfirm.addEventListener("click", () => {
     deleteModal.classList.add("hidden");
     applicationToDelete = null;
 });
+
+//Back Button
+applicationDetailsBack.addEventListener("click", () => {
+    selectedApplication = null;
+    applicationHeader.classList.remove("hidden");
+    applicationDetails.classList.add("hidden");
+    applicationDashboard.classList.remove("hidden");
+});
+
+//Add Note
+addNoteButton.addEventListener("click", () => {
+    additionalNoteForm.classList.remove("hidden");
+});
+
+//Cancel Note
+cancelNoteButton.addEventListener("click", () => {
+    additionalNoteForm.classList.add("hidden");
+    additionalNoteInput.value = "";
+});
+
+//Save Note
+saveNoteButton.addEventListener("click", () => {
+    const applicationData = applications.find(
+        application => application.id === selectedApplication
+    );
+    const noteText = additionalNoteInput.value.trim();
+    // 1. Validate the note
+    if (noteText === "") {
+        console.log("Empty note detected");
+        return;
+    }
+
+    // 2. Initialise the additionalNotes array if it doesn't exist
+    if (!applicationData.additionalNotes) {
+        applicationData.additionalNotes = [];
+    }
+
+    // 3. Create and save new note
+    const newNote = {
+        id: Date.now(),
+        text: noteText
+    };
+
+    applicationData.additionalNotes.push(newNote);
+    localStorage.setItem("applications", JSON.stringify(applications));
+
+    createAdditionalNote(newNote, applicationData);
+
+    additionalNoteInput.value = "";
+    additionalNoteForm.classList.add("hidden");
+});
+
+addEventButton.addEventListener("click", () => {
+    eventForm.classList.remove("hidden");
+    eventTitleInput.focus();
+});
+
+cancelEventButton.addEventListener("click", () => {
+    eventForm.classList.add("hidden");
+
+    eventTitleInput.value = "";
+    eventDateInput.value = "";
+    eventDescriptionInput.value = "";
+});
+
+saveEventButton.addEventListener("click", () => {
+    const eventTitle = eventTitleInput.value.trim();
+    const eventDate = eventDateInput.value;
+    const eventDescription = eventDescriptionInput.value.trim();
+
+    if (!eventTitle || !eventDate) {
+        alert("PLease enter an event title and date");
+        return;
+    }
+
+    const applicationData = applications.find(
+        application => application.id === selectedApplication
+    );
+
+    if (!applicationData) return;
+
+    if (!applicationData.importantDates) {
+        applicationData.importantDates = [];
+    }
+
+    const newEvent = {
+        id: Date.now(),
+        title: eventTitle,
+        date: eventDate,
+        description: eventDescription
+    };
+
+    applicationData.importantDates.push(newEvent);
+    renderTimeline(applicationData);
+
+    localStorage.setItem("applications", JSON.stringify(applications));
+
+    eventForm.classList.add("hidden");
+    eventTitleInput.value = "";
+    eventDateInput.value = "";
+    eventDescriptionInput.value = "";
+
+    console.log(applicationData.importantDates);
+})

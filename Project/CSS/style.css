@@ -1,3 +1,5 @@
+/* Job Application Tracker â€” complete mobile-first stylesheet. */
+
 body {
     background-color: var(--clr-bg);
     color: var(--clr-text);
@@ -238,7 +240,7 @@ main {
     );
 }
 
-.stats_card:nh-child(5) {
+.stats_card:nth-child(5) {
     background-color: color-mix(
         in srgb,
         var(--clr-rejected) 8%,
@@ -486,6 +488,7 @@ main {
         var(--clr-applied) 10%,
         transparent
     );
+
 }
 
 .status_rejected {
@@ -533,7 +536,7 @@ main {
     z-index: 1000;
 }
 
-#add_application_form {
+\#add_application_form {
     width: 100%;
     max-width: 30rem;
     background-color: var(--clr-surface);
@@ -611,4 +614,606 @@ main {
 
 .application_details_header h2 {
     text-align: center;
+}
+
+.application_details_status {
+    width: fit-content;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.application_details_salary_group {
+    margin-top: 1.5rem;
+}
+
+.application_details_label {
+    color: var(--clr-text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.application_details_salary {
+    color: var(--clr-text);
+    font-size: 1rem;
+}
+
+.application_details_url_group {
+    margin-top: 1.5rem;
+}
+
+.application_details_url[href] {
+    color: var(--clr-accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.application_details_url[href]:hover {
+    text-decoration: underline;
+}
+
+.application_details_notes_group {
+    padding: 1rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+}
+
+.application_details_section_title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.application_details_notes {
+    color: var(--clr-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+.application_details_additional_notes_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.application_details_additional_notes_header .application_details_section_title {
+    margin: 0;
+}
+
+.application_details_additional_notes {
+    margin-top: 2rem;
+}
+
+.application_details_note_form.hidden {
+    display: none;
+}
+
+.application_details_note_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.application_details_add_note {
+    padding: 0.5rem 0.75rem;
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.application_details_note_input {
+    width: 100%;
+    min-height: 7rem;
+    padding: 0.75rem;
+    background-color: var(--clr-surface);
+    color: var(--clr-text);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    font: inherit;
+    resize: vertical;
+}
+
+.application_details_note_actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.application_details_note_save,
+.application_details_note_cancel {
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.application_details_note_save {
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
+    border: none;
+}
+
+.application_details_note_cancel {
+    background-color: var(--clr-surface-light);
+    color: var(--clr-text);
+    border: 1px solid var(--clr-border);
+}
+
+.application_details_notes_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.application_details_additional_note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin: 0;
+}
+
+.application_details_note_delete {
+    background: transparent;
+    border: none;
+    color: var(--clr-rejected);
+}
+
+/* Application Details â€” mobile-first styles.
+   Load AFTER css/style.css and css/responsive.css. */
+
+.application_details {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 0 3rem;
+}
+
+.application_details.hidden { display: none; }
+
+/* Header */
+.application_details_header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3.5rem;
+    margin: 0 0 1.5rem;
+}
+.application_details_header h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+.application_details_back {
+    position: static;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.65rem;
+    background: var(--clr-surface);
+    color: var(--clr-text);
+    cursor: pointer;
+}
+.application_details_header_spacer { width: 2.75rem; }
+
+/* Role, company and status */
+.application_details_summary {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+}
+.application_details_company_logo {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    background: var(--clr-accent);
+    color: var(--clr-text);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.application_details_summary_info { min-width: 0; }
+.application_details_role {
+    margin: 0 0 0.3rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+.application_details_company {
+    margin: 0;
+    color: var(--clr-text-muted);
+    font-size: 0.9rem;
+}
+.application_details_status {
+    grid-column: 2;
+    justify-self: start;
+    margin: 0;
+    width: fit-content;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid currentColor;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Information card */
+.application_details_info_card,
+.application_details_links_card {
+    padding: 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    background: var(--clr-surface);
+}
+.application_details_info_card { display: grid; gap: 1rem; }
+.application_details_salary_group,
+.application_details_date_group,
+.application_details_url_group { margin: 0; }
+.application_details_info_card > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+.application_details_label {
+    margin: 0;
+    color: var(--clr-text-muted);
+    font-size: 0.875rem;
+}
+.application_details_salary,
+.application_details_date {
+    margin: 0;
+    color: var(--clr-text);
+    font-size: 0.875rem;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+/* Section headings and notes */
+.application_details_section_title {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.application_details_initial_notes,
+.application_details_additional_notes,
+.application_details_timeline_section,
+.application_details_links_section { margin-top: 1.5rem; }
+.application_details_notes_group,
+.application_details_additional_note {
+    background: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+.application_details_additional_notes_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+.application_details_additional_notes_header .application_details_section_title { 
+    margin: 0; 
+}
+
+.application_details_notes_list { 
+    margin-top: 0.75rem; 
+}
+
+.application_details_additional_note { 
+    gap: 0.75rem; 
+    overflow-wrap: anywhere; 
+}
+
+.application_details_note_delete { 
+    cursor: pointer; 
+    flex-shrink: 0; 
+}
+.application_details_add_note { 
+    flex-shrink: 0; 
+}
+
+.application_details_note_form.hidden { 
+    display: none; 
+}
+
+/* Links */
+.application_details_url_group {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+}
+.application_details_url_group i { 
+    color: var(--clr-text-muted); 
+}
+
+.application_details_url_group 
+.application_details_url {
+    grid-column: 2;
+    overflow-wrap: anywhere;
+    color: var(--clr-accent);
+    font-size: 0.875rem;
+}
+
+.application_details_url:not([href]) { 
+    color: var(--clr-text-muted);
+}
+
+/* Application Details - Information Card */
+
+.application_details_info_card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application_details_salary_group,
+.application_details_date_group,
+.application_details_url_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+}
+
+.application_details_label {
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.application_details_salary,
+.application_details_date,
+.application_details_url {
+    margin: 0;
+    text-align: right;
+}
+
+.application_details_url {
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 480px) {
+    .application_details_summary { 
+        grid-template-columns: 
+        3.75rem minmax(0, 1fr) auto; 
+    }
+
+    .application_details_company_logo { 
+        width: 3.75rem; 
+        height: 3.75rem; 
+    }
+
+    .application_details_status { 
+        grid-column: 3; 
+    }
+}
+
+.application_details_event_form.hidden {
+    display: none;
+}
+
+/* ========================================
+   IMPORTANT DATES
+======================================== */
+
+.application_details_timeline {
+    margin-top: 2rem;
+}
+
+.application_details_timeline_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.application_details_timeline_header
+.application_details_section_title {
+    margin: 0;
+}
+
+.application_details_add_event {
+    padding: 0.5rem 0.75rem;
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.application_details_add_event:hover {
+    background-color: var(--clr-accent-hover);
+}
+
+/* Event form */
+
+.application_details_event_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+}
+
+.application_details_event_form.hidden {
+    display: none;
+}
+
+.application_details_event_form label {
+    color: var(--clr-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.application_details_event_title,
+.application_details_event_date,
+.application_details_event_description {
+    width: 100%;
+    min-width: 0;
+    padding: 0.75rem;
+    background-color: var(--clr-surface-light);
+    color: var(--clr-text);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.5rem;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.application_details_event_description {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+.application_details_event_title:focus,
+.application_details_event_date:focus,
+.application_details_event_description:focus {
+    outline: 2px solid var(--clr-accent);
+    outline-offset: 2px;
+}
+
+/* Save and Cancel buttons */
+
+.application_details_event_actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.application_details_event_save,
+.application_details_event_cancel {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.application_details_event_save {
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
+    border: none;
+}
+
+.application_details_event_cancel {
+    background-color: var(--clr-surface-light);
+    color: var(--clr-text);
+    border: 1px solid var(--clr-border);
+}
+
+/* Timeline display container */
+
+.application_details_timeline_list {
+    padding: 1rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+}
+
+.application_details_timeline_list:empty {
+    display: none;
+}
+
+/* ========================================
+   IMPORTANT DATES - TIMELINE DISPLAY
+======================================== */
+
+.application_details_timeline_list {
+    position: relative;
+    padding: 1.25rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    border-radius: 0.75rem;
+}
+
+.application_details_timeline_list:empty {
+    display: none;
+}
+
+.application_details_timeline_event {
+    position: relative;
+    margin-left: 0.5rem;
+    padding: 0 0 1.75rem 2rem;
+    border-left: 2px solid var(--clr-border);
+}
+
+.application_details_timeline_event:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+}
+
+.application_details_timeline_event::before {
+    content: "";
+    position: absolute;
+    top: 0.2rem;
+    left: -0.6rem;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--clr-interview);
+    border-radius: 50%;
+    background-color: var(--clr-surface);
+    box-sizing: border-box;
+}
+
+.application_details_timeline_event h4 {
+    margin: 0 0 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.application_details_timeline_event p {
+    margin: 0.15rem 0;
+    color: var(--clr-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+/* Application Submitted milestone */
+
+.timeline_event_submitted {
+    border-left-color: var(--clr-offer);
+}
+
+.timeline_event_submitted::before {
+    content: "✓";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--clr-offer);
+    border-color: var(--clr-offer);
+    color: var(--clr-bg);
+    font-size: 0.7rem;
+    font-weight: bold;
 }
