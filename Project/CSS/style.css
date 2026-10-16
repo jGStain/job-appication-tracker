@@ -1178,7 +1178,6 @@ main {
     position: relative;
     margin-left: 0.5rem;
     padding: 0 0 1.75rem 2rem;
-    border-left: 2px solid var(--clr-border);
 }
 
 .application_details_timeline_event:last-child {
@@ -1212,14 +1211,6 @@ main {
     line-height: 1.5;
 }
 
-.timeline_line_completed {
-    border-left-color: var(--clr-offer);
-}
-
-.timeline_line_pending {
-    border-left-color: var(--clr-interview);
-}
-
 /* Application Submitted milestone */
 
 .timeline_event_completed::before,
@@ -1235,22 +1226,39 @@ main {
     font-weight: bold;
 }
 
+.application_details_timeline_event::after {
+    content: "";
+    position: absolute;
+    top: 0.7rem;
+    bottom: -0.7rem;
+    left: calc(-0.1rem - 1px);
+    width: 2px;
+    background-color: var(--clr-border);
+    z-index: 0;
+}
+
+.application_details_timeline_event::before {
+    z-index: 1;
+}
+
+.application_details_timeline_event:last-child::after {
+    display: none;
+}
+
+.timeline_line_completed::after {
+    background-color: var(--clr-offer);
+}
+
+.timeline_line_pending::after {
+    background-color: var(--clr-interview);
+}
+
 .application_details_timeline_event:not(.timeline_event_submitted) {
     padding-right: 2rem;
 }
 
 .application_details_timeline_event:first-child {
     border-image: none;
-}
-
-.application_details_timeline_event:first-child::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -2px;
-    width: 2px;
-    height: 0.2rem;
-    background-color: var(--clr-surface);
 }
 
 .application_details_event_delete {
