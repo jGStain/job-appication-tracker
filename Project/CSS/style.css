@@ -869,10 +869,17 @@ main {
     border-radius: 0.75rem;
     background: var(--clr-surface);
 }
-.application_details_info_card { display: grid; gap: 1rem; }
+.application_details_info_card { 
+    display: grid; 
+    gap: 1rem; 
+}
+
 .application_details_salary_group,
 .application_details_date_group,
-.application_details_url_group { margin: 0; }
+.application_details_url_group { 
+    margin: 0; 
+}
+
 .application_details_info_card > div {
     display: flex;
     justify-content: space-between;
@@ -902,7 +909,10 @@ main {
 .application_details_initial_notes,
 .application_details_additional_notes,
 .application_details_timeline_section,
-.application_details_links_section { margin-top: 1.5rem; }
+.application_details_links_section { 
+    margin-top: 1.5rem; 
+}
+
 .application_details_notes_group,
 .application_details_additional_note {
     background: var(--clr-surface);
@@ -910,12 +920,14 @@ main {
     border-radius: 0.75rem;
     padding: 1rem;
 }
+
 .application_details_additional_notes_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;
 }
+
 .application_details_additional_notes_header .application_details_section_title { 
     margin: 0; 
 }
@@ -1200,12 +1212,17 @@ main {
     line-height: 1.5;
 }
 
-/* Application Submitted milestone */
-
-.timeline_event_submitted {
+.timeline_line_completed {
     border-left-color: var(--clr-offer);
 }
 
+.timeline_line_pending {
+    border-left-color: var(--clr-interview);
+}
+
+/* Application Submitted milestone */
+
+.timeline_event_completed::before,
 .timeline_event_submitted::before {
     content: "✓";
     display: flex;
@@ -1216,4 +1233,50 @@ main {
     color: var(--clr-bg);
     font-size: 0.7rem;
     font-weight: bold;
+}
+
+.application_details_timeline_event:not(.timeline_event_submitted) {
+    padding-right: 2rem;
+}
+
+.application_details_timeline_event:first-child {
+    border-image: none;
+}
+
+.application_details_timeline_event:first-child::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 2px;
+    height: 0.2rem;
+    background-color: var(--clr-surface);
+}
+
+.application_details_event_delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: var(--clr-rejected);
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.application_details_event_complete {
+    display: block;
+    width: fit-content;
+    margin-top: 0.75rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    background-color: var(--clr-surface);
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text-muted);
+}
+
+.event_complete_pending {
+    color: var(--clr-offer);
+    border: 1px solid var(--clr-offer);
 }

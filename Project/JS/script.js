@@ -626,9 +626,23 @@ const renderTimeline = applicationData => {
         (a, b) => a.date.localeCompare(b.date)
     );
 
-    sortedEvents.forEach(event => {
+    sortedEvents.forEach((event, index) => {
         const eventElement = document.createElement("div");
         eventElement.classList.add("application_details_timeline_event");
+        const nextEvent = sortedEvents[index + 1];
+
+        if (nextEvent) {
+            if (nextEvent.completed) {
+                eventElement.classList.add("timeline_line_completed");
+            } else {
+                eventElement.classList.add("timeline_line_pending");
+            }
+        }
+
+        if (event.completed) {
+            eventElement.classList.add("timeline_event_completed");
+        }
+
         if (event.automatic) {
             eventElement.classList.add("timeline_event_submitted");
         }
@@ -654,6 +668,43 @@ const renderTimeline = applicationData => {
             eventDescription
         );
 
+        if (!event.automatic) {
+            const eventDeleteButton = document.createElement("button");
+            eventDeleteButton.classList.add("application_details_event_delete");
+            const deleteButtonIcon = document.createElement("i");
+            deleteButtonIcon.classList.add("fa-solid", "fa-trash-can");
+            eventDeleteButton.appendChild(deleteButtonIcon);
+            eventDeleteButton.type = "button";
+            eventDeleteButton.setAttribute("aria-label", "Delete event");
+            eventElement.appendChild(eventDeleteButton);
+            const eventCompleteButton = document.createElement("button");
+            eventCompleteButton.type = "button";
+            eventCompleteButton.classList.add("application_details_event_complete");
+            eventCompleteButton.setAttribute("aria-label", "Toggle event completion");
+            eventCompleteButton.textContent = event.completed ? "Mark Incomplete" : "Mark Complete";
+            eventElement.appendChild(eventCompleteButton);
+
+            if (!event.completed) {
+                eventCompleteButton.classList.add("event_complete_pending");
+            }
+
+            eventDeleteButton.addEventListener("click", () => {
+                const eventIndex = applicationData.importantDates.findIndex(
+                    item => item.id === event.id
+                );
+                if (eventIndex !== -1) {
+                    applicationData.importantDates.splice(eventIndex, 1);
+                    localStorage.setItem("applications", JSON.stringify(applications));
+                    renderTimeline(applicationData);
+                }
+            });
+
+            eventCompleteButton.addEventListener("click", () => {
+                event.completed = !event.completed;
+                localStorage.setItem("applications", JSON.stringify(applications));
+                    renderTimeline(applicationData);
+            });
+        }
         timelineList.appendChild(eventElement);
     });
 };
@@ -876,7 +927,8 @@ saveEventButton.addEventListener("click", () => {
         id: Date.now(),
         title: eventTitle,
         date: eventDate,
-        description: eventDescription
+        description: eventDescription,
+        completed: false
     };
 
     applicationData.importantDates.push(newEvent);
