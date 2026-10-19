@@ -14,10 +14,10 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     padding: 1rem 1.5rem;
 }
 
-.app_header_menu,
 .app_header_add {
     border: none;
     background: none;
@@ -26,20 +26,21 @@ main {
 }
 
 .app_header_title {
-    font-size: 1.25rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .app_header_add {
+    margin-left: auto;
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 0.75rem;
     background-color: var(--clr-accent);
     font-size: 1.75rem;
-}
-
-.app_header_menu {
-    font-size: 1.5rem;
 }
 
 .search_controls_container {
