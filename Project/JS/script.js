@@ -101,6 +101,10 @@ const cancelEventButton = document.querySelector(".application_details_event_can
 
 const timelineList = document.querySelector(".application_details_timeline_list");
 
+const applicationDetailsEdit = document.querySelector(".application_details_edit");
+
+const applicationDetailsDelete = document.querySelector(".application_details_delete");
+
 // ========================================
 // FUNCTIONS
 // ========================================
@@ -160,64 +164,7 @@ const createApplicationCard = application => {
     companyLogo.addEventListener("click", () => {
         selectedApplication = application.id;
         const applicationData = applications.find((application) => selectedApplication === application.id);
-        const companyInitials = applicationData.company
-            .trim()
-            .split(/\s+/)
-            .map(word => word.charAt(0))
-            .join("")
-            .toUpperCase();
-        
-        applicationDetailsLogo.textContent = companyInitials;
-        applicationDetailsCompany.textContent = applicationData.company;
-        applicationDetailsRole.textContent = applicationData.role;
-        applicationDetailsStatus.textContent = applicationData.status;
-        applicationDetailsStatus.classList.remove(
-            "status_interested", 
-            "status_applied", 
-            "status_interview", 
-            "status_offer", 
-            "status_rejected"
-        );
-        applicationDetailsStatus.classList.add(`status_${applicationData.status.toLowerCase()}`);
-        applicationDetailsSalary.textContent = applicationData.salary || "Salary not specified";
-        if (applicationData.date) {
-            const applicationDateObject = new Date(applicationData.date);
-
-            const dateOptions = {
-                day: "numeric",
-                month: "short",
-                year: "numeric"
-            };
-
-            const formattedDate =
-                applicationDateObject.toLocaleDateString(
-                    "en-GB",
-                    dateOptions
-                );
-            
-            applicationDetailsDate.textContent = formattedDate;
-        } else {
-            applicationDetailsDate.textContent = "Date not specified";
-        }
-
-        if (applicationData.jobUrl) {
-            applicationDetailsUrl.href = applicationData.jobUrl;
-            applicationDetailsUrl.textContent = "View Job Advertisement";
-        } else {
-            applicationDetailsUrl.removeAttribute("href");
-            applicationDetailsUrl.textContent = "Job URL not specified";
-        }
-
-        applicationDetailsNotes.textContent = applicationData.notes || "No initial notes added";
-        additionalNotesList.innerHTML = "";
-
-        const savedNotes = applicationData.additionalNotes || [];
-
-        savedNotes.forEach(note => {
-            createAdditionalNote(note, applicationData);
-        });
-
-        renderTimeline(applicationData);
+        renderApplicationDetails(applicationData);
         
         applicationHeader.classList.add("hidden");
         applicationDetails.classList.remove("hidden");
@@ -688,6 +635,76 @@ const renderTimeline = applicationData => {
     });
 };
 
+const renderApplicationDetails = applicationData => {
+    const companyInitials = applicationData.company
+        .trim()
+        .split(/\s+/)
+        .map(word => word.charAt(0))
+        .join("")
+        .toUpperCase();
+            
+    applicationDetailsLogo.textContent = companyInitials;
+    applicationDetailsCompany.textContent = applicationData.company;
+    applicationDetailsRole.textContent = applicationData.role;
+    applicationDetailsStatus.textContent = applicationData.status;
+
+    applicationDetailsStatus.classList.remove(
+        "status_interested", 
+        "status_applied", 
+        "status_interview", 
+        "status_offer", 
+        "status_rejected"
+    );
+
+    applicationDetailsStatus.classList.add(`status_${applicationData.status.toLowerCase()}`);
+
+    if (!applicationData.salary) {
+        applicationDetailsSalary.textContent = "Salary not specified";
+    } else {
+        applicationDetailsSalary.textContent = `£${Number(applicationData.salary).toLocaleString("en-GB")}`;
+    }
+
+    if (applicationData.date) {
+        const applicationDateObject = new Date(applicationData.date);
+
+        const dateOptions = {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        };
+
+        const formattedDate =
+            applicationDateObject.toLocaleDateString(
+                "en-GB",
+                dateOptions
+            );
+            
+        applicationDetailsDate.textContent = formattedDate;
+    } else {
+        applicationDetailsDate.textContent = "Date not specified";
+    }
+
+    if (applicationData.jobUrl) {
+        applicationDetailsUrl.href = applicationData.jobUrl;
+        applicationDetailsUrl.textContent = "View Job Advertisement";
+    } else {
+        applicationDetailsUrl.removeAttribute("href");
+        applicationDetailsUrl.textContent = "Job URL not specified";
+    }
+
+    applicationDetailsNotes.textContent = applicationData.notes || "No initial notes added";
+    additionalNotesList.innerHTML = "";
+
+    const savedNotes = applicationData.additionalNotes || [];
+
+    savedNotes.forEach(note => {
+        createAdditionalNote(note, applicationData);
+    });
+
+    renderTimeline(applicationData);
+
+};
+
 
 // ========================================
 // INITIAL PAGE SETUP
@@ -709,6 +726,19 @@ applicationForm.addEventListener("submit", (e) => {
     const date = document.querySelector("#date").value;
     const status = document.querySelector("#status").value;
     const salary = document.querySelector("#salary").value;
+    const salaryNumber = Number(salary);
+
+    if (salary !== "") {
+        if (salaryNumber > 300000 || salaryNumber < 0) {
+            alert("Salary cannot be below £0 or exceed £300,000");
+            return;
+        }
+        if (!Number.isInteger(salaryNumber)) {
+            alert("Salary must be a whole number");
+            return;
+        }
+    }
+
     const jobUrl = document.querySelector("#jobUrl").value;
     const notes = document.querySelector("#notes").value;
 
@@ -741,18 +771,19 @@ applicationForm.addEventListener("submit", (e) => {
 
     localStorage.setItem("applications", JSON.stringify(applications));
 
+    if (applicationToEdit !== null && selectedApplication === applicationToEdit) {
+        const updatedApplication = applications.find(
+            application => selectedApplication === application.id
+        );
+        renderApplicationDetails(updatedApplication);
+    }
+
     updateApplicationUI();
 
     applicationForm.reset();
     applicationModal.classList.add("hidden");
 
     applicationToEdit = null;
-
-    updateApplicationUI();
-
-    applicationForm.reset();
-
-    applicationModal.classList.add("hidden");
 });
 
 // Status Filter Functionality
@@ -815,6 +846,14 @@ deleteModalConfirm.addEventListener("click", () => {
     localStorage.setItem("applications", JSON.stringify(applications));
     updateApplicationUI();
     deleteModal.classList.add("hidden");
+
+    if (selectedApplication === applicationToDelete) {
+        applicationDetails.classList.add("hidden");
+        applicationDashboard.classList.remove("hidden");
+        applicationHeader.classList.remove("hidden");
+        selectedApplication = null;
+    }
+
     applicationToDelete = null;
 });
 
@@ -921,4 +960,29 @@ saveEventButton.addEventListener("click", () => {
     eventDescriptionInput.value = "";
 
     console.log(applicationData.importantDates);
-})
+});
+
+applicationDetailsEdit.addEventListener("click", () => {
+    const applicationToUpdate = applications.find(
+        application => application.id === selectedApplication
+    );
+
+    applicationToEdit = applicationToUpdate.id;
+    
+    document.querySelector("#company").value = applicationToUpdate.company;
+    document.querySelector("#role").value = applicationToUpdate.role;
+    document.querySelector("#date").value = applicationToUpdate.date;
+    document.querySelector("#status").value = applicationToUpdate.status;
+    document.querySelector("#notes").value = applicationToUpdate.notes;
+    document.querySelector("#salary").value = applicationToUpdate.salary || "";
+    document.querySelector("#jobUrl").value = applicationToUpdate.jobUrl || "";
+
+    applicationModal.classList.remove("hidden");
+    applicationFormTitle.textContent = "Edit Application";
+    applicationFormSubmit.textContent = "Save Changes";
+});
+
+applicationDetailsDelete.addEventListener("click", () => {
+    applicationToDelete = selectedApplication;
+    deleteModal.classList.remove("hidden");
+});

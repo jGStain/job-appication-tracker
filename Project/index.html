@@ -197,7 +197,20 @@
             (optional)
         </span>
         </label>
-        <input class="application_form_control" id="salary" name="salary" placeholder="e.g. £30,000 - £35,000" type="text"/>
+
+        <div class="application_salary_input">
+            <span class="application_salary_symbol" aria-hidden="true">£</span>
+            
+            <input 
+                class="application_form_control" 
+                id="salary" name="salary" 
+                placeholder="e.g. £30,000 - £35,000" 
+                type="number"
+                min="0"
+                max="300000"
+                step="1"
+            />
+        </div>
     </div>
     <div class="application_form_group">
         <label for="jobUrl">
@@ -260,6 +273,17 @@
         </h2>
         <span aria-hidden="true" class="application_details_header_spacer">
         </span>
+    </div>
+    <div class="application_details_actions">
+        <button class="application_details_edit" type="button">
+            <i class="fa-solid fa-pen" aria-hidden="true"></i>
+            Edit Application
+        </button>
+
+        <button class="application_details_delete" type="button">
+            <i class="fa-solid fa-trash" aria-hidden="true"></i>
+            Delete Application
+        </button>
     </div>
     <!-- Application summary: role, company and status -->
     <div class="application_details_summary">

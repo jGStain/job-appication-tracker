@@ -1,7 +1,11 @@
 /* Job Application Tracker â€” complete mobile-first stylesheet. */
 
+html,
 body {
     background-color: var(--clr-bg);
+}
+
+body {
     color: var(--clr-text);
     font-family: Arial, sans-serif;
 }
@@ -595,6 +599,27 @@ main {
     cursor: pointer;
 }
 
+.application_salary_input {
+    position: relative;
+    width: 100%;
+}
+
+.application_salary_symbol {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--clr-text-muted);
+}
+
+.application_salary_input .application_form_control {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 2.5rem;
+}
+
 .app_header.hidden {
     display: none;
 }
@@ -618,6 +643,38 @@ main {
 .application_details_back {
     position: absolute;
     left: 0;
+}
+
+.application_details_actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.application_details_edit,
+.application_details_delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.application_details_edit {
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
+    border: none;
+}
+
+.application_details_delete {
+    background-color: transparent;
+    color: var(--clr-rejected);
+    border: 1px solid var(--clr-rejected);
 }
 
 .application_details_header h2 {
@@ -690,7 +747,8 @@ main {
     align-items: center;
 }
 
-.application_details_additional_notes_header .application_details_section_title {
+.application_details_additional_notes_header 
+.application_details_section_title {
     margin: 0;
 }
 
@@ -790,11 +848,14 @@ main {
 .application_details {
     width: 100%;
     max-width: 42rem;
+    min-height: 100vh;
     margin: 0 auto;
     padding: 0 0 3rem;
 }
 
-.application_details.hidden { display: none; }
+.application_details.hidden { 
+    display: none; 
+}
 
 /* Header */
 .application_details_header {
@@ -806,12 +867,14 @@ main {
     min-height: 3.5rem;
     margin: 0 0 1.5rem;
 }
+
 .application_details_header h2 {
     margin: 0;
     text-align: center;
     font-size: 1.125rem;
     font-weight: 600;
 }
+
 .application_details_back {
     position: static;
     display: grid;
@@ -824,7 +887,10 @@ main {
     color: var(--clr-text);
     cursor: pointer;
 }
-.application_details_header_spacer { width: 2.75rem; }
+
+.application_details_header_spacer { 
+    width: 2.75rem; 
+}
 
 /* Role, company and status */
 .application_details_summary {
@@ -834,6 +900,7 @@ main {
     gap: 0.75rem 1rem;
     margin-bottom: 1.25rem;
 }
+
 .application_details_company_logo {
     display: grid;
     place-items: center;
@@ -845,18 +912,24 @@ main {
     font-size: 1.25rem;
     font-weight: 700;
 }
-.application_details_summary_info { min-width: 0; }
+
+.application_details_summary_info { 
+    min-width: 0; 
+}
+
 .application_details_role {
     margin: 0 0 0.3rem;
     font-size: 1.15rem;
     font-weight: 700;
     overflow-wrap: anywhere;
 }
+
 .application_details_company {
     margin: 0;
     color: var(--clr-text-muted);
     font-size: 0.9rem;
 }
+
 .application_details_status {
     grid-column: 2;
     justify-self: start;
@@ -877,6 +950,7 @@ main {
     border-radius: 0.75rem;
     background: var(--clr-surface);
 }
+
 .application_details_info_card { 
     display: grid; 
     gap: 1rem; 
@@ -894,11 +968,13 @@ main {
     align-items: baseline;
     gap: 1rem;
 }
+
 .application_details_label {
     margin: 0;
     color: var(--clr-text-muted);
     font-size: 0.875rem;
 }
+
 .application_details_salary,
 .application_details_date {
     margin: 0;
@@ -914,6 +990,7 @@ main {
     font-size: 1rem;
     font-weight: 600;
 }
+
 .application_details_initial_notes,
 .application_details_additional_notes,
 .application_details_timeline_section,
@@ -936,7 +1013,8 @@ main {
     gap: 0.75rem;
 }
 
-.application_details_additional_notes_header .application_details_section_title { 
+.application_details_additional_notes_header 
+.application_details_section_title { 
     margin: 0; 
 }
 
@@ -968,6 +1046,7 @@ main {
     align-items: center;
     gap: 0.5rem 0.75rem;
 }
+
 .application_details_url_group i { 
     color: var(--clr-text-muted); 
 }
@@ -1086,6 +1165,7 @@ main {
     background-color: var(--clr-surface);
     border: 1px solid var(--clr-border);
     border-radius: 0.75rem;
+    min-width: 0;
 }
 
 .application_details_event_form.hidden {
@@ -1110,6 +1190,17 @@ main {
     border-radius: 0.5rem;
     font: inherit;
     box-sizing: border-box;
+}
+
+.application_details_event_date {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 2.8rem;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .application_details_event_description {
